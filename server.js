@@ -3,4 +3,3 @@ const app = express();
 app.use(express.json());
 const path = require('path');
 const db = require('./db/index');
-const { User, Shoe, Category }

@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const db = require('./db/index');
 const { User, Shoe, Category } = db.models;
+const app = require('supertest')(require('./app'));
 
 describe('Data Layer', () => {
   beforeEach(() => db.syncAndSeed());
@@ -50,6 +51,36 @@ describe('Data Layer', () => {
   })
 })
 
-describe('Routes', () => {
+describe('Routes', async () => {
 
-});
+  const response = await app.get('/shoes')
+
+  describe('Get /shoes ', ()=>{
+    it('Returns 200 status',()=>{
+      expect(response.status).to.equal(200)
+    })
+    it('Gets all shoes', ()=>{
+      expect((response.body.length).to.be.above(0))
+    })
+  })
+
+  describe('Get /shoes/:id', async ()=>{
+
+    const conc11 = await Shoe.findOne({
+      where:{
+        name: 'Concord 11'
+      }
+    })
+
+    const filteredResponse = await app.get(`/shoes/${conc11.id}`)
+
+    describe('Get /shoes/:id ', ()=>{
+      it('Returns 200 status',()=>{
+        expect(filteredResponse.status).to.equal(200)
+      })
+      it('Gets shoes with id', ()=>{
+        expect(filteredResponse.body.length).to.be.above(0)
+      })
+    })
+  })
+})
