@@ -18,7 +18,7 @@ const User = conn.define('user',{
   },
   admin:{
     type:BOOLEAN,
-    setDefault:false
+    defaultValue:false
   },
   password:{
     type:STRING,

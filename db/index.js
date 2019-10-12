@@ -14,6 +14,11 @@ const syncAndSeed = async() =>{
     {name:'Palak', email:'palak@yahoo.com', password:'PALAK'}
   ]
 
+  const categories=[
+    {name:'Jordan'},
+    {name:'Nike'}
+  ]
+
   const shoes =[
     {imageURL:'njaisd.com', name:'Concord 11', price:400, size:11},
     {imageURL:'njaisd.com', name:'Supreme', price:850, size:6},
@@ -21,14 +26,10 @@ const syncAndSeed = async() =>{
     {imageURL:'njaisd.com', name:'Black',price:100, size:13}
   ]
 
-  const categories=[
-    {name:'Jordan'},
-    {name:'Nike'}
-  ]
   
   const [Mark, Zach, Grey, Palak] = await Promise.all(users.map(user=>User.create(user)))
   const [Concord, Supreme, NMD, Black] = await Promise.all(shoes.map(shoe=>Shoe.create(shoe)))
-  const [Jordan, Nike] = await Promise.all(categories.map(categories=>Category.create(category)))
+  const [Jordan, Nike] = await Promise.all(categories.map(category=>Category.create(category)))
 
   return [Mark, Zach, Grey, Palak], [Concord, Supreme, NMD, Black], [Jordan, Nike]
 }

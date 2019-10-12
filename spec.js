@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const db = require('./db');
+const db = require('./db/index');
 const { User, Shoe, Category } = db.models;
 
 describe('Data Layer', () => {
@@ -11,7 +11,7 @@ describe('Data Layer', () => {
   })
   describe('User model', () => {
     it('Creates at least one user', async () => {
-      expect((await User.findAll()).length).to.not.be(0);
+      expect((await User.findAll()).length).to.be.above(0);
     })
     it('All users have name and email', async () => {
       const users = await User.findAll();
@@ -21,7 +21,7 @@ describe('Data Layer', () => {
     it('Admin functionality works correctly', async () => {
       const users = await User.findAll();
       expect(users.find(user => user.name === 'Zach').admin).to.equal(true);
-      expect(users.find(user => user.name === 'Zach').admin).to.equal(false);
+      expect(users.find(user => user.name === 'Mark').admin).to.equal(false);
     })
   })
 })
