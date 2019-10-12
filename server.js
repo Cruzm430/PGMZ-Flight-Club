@@ -12,6 +12,7 @@ db.syncAndSeed()
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
+
 app.get('/shoes', (req, res, next) => {
   Shoe.findAll()
     .then(shoes => res.send(shoes))
