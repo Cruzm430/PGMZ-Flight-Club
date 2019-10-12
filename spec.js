@@ -21,8 +21,22 @@ describe('Data Layer', () => {
     it('Admin functionality works correctly', async () => {
       const users = await User.findAll();
       expect(users.find(user => user.name === 'Zach').admin).to.equal(true);
-      expect(users.find(user => user.name === 'Zach').admin).to.equal(false);
+      expect(users.find(user => user.name === 'Mark').admin).to.equal(false);
     })
+  })
+  describe('Shoe model', () => {
+    it('Creates at least one shoe', async () => {
+      expect((await Shoe.findAll()).length).to.not.be(0);
+    });
+    it('Shoes have size, price, image', async () => {
+      const shoes = await Shoe.findAll();
+      expect(shoes.filter(shoe => shoe.size).length).to.equal(shoes.length);
+      expect(shoes.filter(shoe => shoe.price).length).to.equal(shoes.length);
+      expect(shoes.filter(shoe => shoe.imageURL).length).to.equal(shoes.length);
+    })
+    it('Shoes have proper categories', async () => {
+      const conc11 = await Shoe.find({where: na})
+    }
   })
 })
 
