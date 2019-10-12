@@ -24,6 +24,30 @@ describe('Data Layer', () => {
       expect(users.find(user => user.name === 'Mark').admin).to.equal(false);
     })
   })
+  describe('Shoe model', () => {
+    it('Creates at least one shoe', async () => {
+      expect((await Shoe.findAll()).length).to.not.be(0);
+    });
+    it('Shoes have size, price, image', async () => {
+      const shoes = await Shoe.findAll();
+      expect(shoes.filter(shoe => shoe.size).length).to.equal(shoes.length);
+      expect(shoes.filter(shoe => shoe.price).length).to.equal(shoes.length);
+      expect(shoes.filter(shoe => shoe.imageURL).length).to.equal(shoes.length);
+    })
+    it('Shoes have proper categories', async () => {
+      const conc11 = await Shoe.findOne({
+        where: {
+          name: 'Concord 11'
+        }
+      });
+      const jordan = await Category.findOne({
+        where: {
+          name: 'Jordan'
+        }
+      })
+      expect(conc11.categoryId).to.equal(jordan.id);
+    })
+  })
 })
 
 describe('Routes', () => {
