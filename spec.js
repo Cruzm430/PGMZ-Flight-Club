@@ -35,8 +35,18 @@ describe('Data Layer', () => {
       expect(shoes.filter(shoe => shoe.imageURL).length).to.equal(shoes.length);
     })
     it('Shoes have proper categories', async () => {
-      const conc11 = await Shoe.find({where: na})
-    }
+      const conc11 = await Shoe.findOne({
+        where: {
+          name: 'Concord 11'
+        }
+      });
+      const jordan = await Category.findOne({
+        where: {
+          name: 'Jordan'
+        }
+      })
+      expect(conc11.categoryId).to.equal(jordan.id);
+    })
   })
 })
 
