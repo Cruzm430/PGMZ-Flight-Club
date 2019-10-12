@@ -12,3 +12,19 @@ db.syncAndSeed()
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
+
+app.get('/shoes', (req, res, next) => {
+  Shoe.findAll()
+    .then(shoes => res.send(shoes))
+    .catch(next);
+})
+
+app.get('/shoes/:id', (req, res, next) => {
+  Shoe.findAll({
+    where: {
+      categoryId: req.params.id
+    }
+  })
+    .then(shoes => res.send(shoes))
+    .catch(next);
+})
