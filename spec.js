@@ -26,7 +26,7 @@ describe('Data Layer', () => {
   })
   describe('Shoe model', () => {
     it('Creates at least one shoe', async () => {
-      expect((await Shoe.findAll()).length).to.not.be(0);
+      expect((await Shoe.findAll()).length).to.be.above(0);
     });
     it('Shoes have size, price, image', async () => {
       const shoes = await Shoe.findAll();

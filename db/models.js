@@ -62,6 +62,9 @@ const Category = conn.define('category',{
   }
 })
 
+Shoe.belongsTo(Category);
+Category.hasMany(Shoe);
+
 module.exports={
   User,
   Shoe,
