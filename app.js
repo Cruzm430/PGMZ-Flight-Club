@@ -9,6 +9,8 @@ module.exports = app;
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
+app.get('/', (req, res, next)=> res.sendFile(path.join(__dirname, 'index.html')));
+
 app.get('/shoes', (req, res, next) => {
   Shoe.findAll()
     .then(shoes => res.send(shoes))
