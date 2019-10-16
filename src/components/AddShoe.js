@@ -24,7 +24,7 @@ class AddShoe extends Component{
     console.log(this.state)
   }
   render(){
-    const {imageURL, name, price, category} = this.state
+    const {imageURL, name, price} = this.state
     const {onChange, onSubmit} = this
     return(
       <div>
@@ -38,7 +38,11 @@ class AddShoe extends Component{
           <input name='price' onChange={onChange} value={price}/>
         </label>
         <label>Category
-          <input name='category' onChange={onChange} value={category}/>
+          <select onChange={onChange}>
+            {
+              this.props.categories.map(category =><option key={category.id} name='category' value={category.id}>{category.name}</option>)
+            }
+          </select>
         </label>
         <button onClick={onSubmit}>Create Shoe</button>
       </div>
@@ -46,9 +50,10 @@ class AddShoe extends Component{
   }
 }
 
-const mapStateToProps = ({shoes}) =>{
+const mapStateToProps = ({shoes, categories}) =>{
   return{
-    shoes
+    shoes,
+    categories
   }
 }
 

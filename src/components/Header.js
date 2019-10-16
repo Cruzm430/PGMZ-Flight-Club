@@ -6,7 +6,7 @@ const Header = ({shoes}) => {
   return(
       <nav>
         <h1>PMGZ Flight Club</h1>
-        <Link to='/hello'>Create</Link>
+        <Link to='/add'>Create</Link>
         <h3>Register</h3>
         <h3>Login</h3>
       </nav>

@@ -11,7 +11,7 @@ const Home = ({shoes}) =>{
       {
         shoes.map(shoe=><div key={shoe.id}>
           <div><img src={shoe.imageURL}/></div>
-        {shoe.name} ({shoe.size}) -- ${shoe.price}</div>)
+        {shoe.name}: ${shoe.price}</div>)
       }
     </div>
   )
