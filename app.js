@@ -29,6 +29,8 @@ app.get('/shoes/:id', (req, res, next) => {
     .catch(next);
 })
 
+
+//could very well be optional!
 app.get('/shoes/search/:str', (req, res, next) => {
   Shoe.findAll({
     where: {
