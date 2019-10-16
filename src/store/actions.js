@@ -1,4 +1,4 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_AUTH} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -37,8 +37,17 @@ const getCategories = () =>{
   return null
 }
 
+const attemptLogin = (username) => {
+    console.log('hi')
+    return async(dispatch) => {
+        const auth = (await axios.post('/api/sessions', {username}).data)
+        dispatch({ type: SET_AUTH, auth})
+    };
+};
+
 export{
   getUsers,
   getShoes,
-  getCategories
+  getCategories,
+  attemptLogin
 }
