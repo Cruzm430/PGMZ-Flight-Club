@@ -9,7 +9,7 @@ class AddShoe extends Component{
       imageURL:'',
       name:'',
       price:'',
-      category:''
+      categoryId:''
     }
     this.onChange = this.onChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -17,11 +17,14 @@ class AddShoe extends Component{
   onSubmit(ev){
     const {imageURL, name, price, category} = this.state
     this.props.createShoe({imageURL, name, price, category})
+    .then(this.setState({imageURL:'', name:'', price:'', categoryId:''}))
+    .then(this.props.history.push('/'))
   }
   onChange(ev){
     let value = ev.target.value
     this.setState({[ev.target.name]: value})
     console.log(this.state)
+    console.log(this.props)
   }
   render(){
     const {imageURL, name, price} = this.state
@@ -38,9 +41,9 @@ class AddShoe extends Component{
           <input name='price' onChange={onChange} value={price}/>
         </label>
         <label>Category
-          <select onChange={onChange}>
+          <select onChange={onChange} name='categoryId'>
             {
-              this.props.categories.map(category =><option key={category.id} name='category' value={category.id}>{category.name}</option>)
+              this.props.categories.map(category =><option key={category.id} value={category.id}>{category.name}</option>)
             }
           </select>
         </label>
@@ -50,10 +53,11 @@ class AddShoe extends Component{
   }
 }
 
-const mapStateToProps = ({shoes, categories}) =>{
+const mapStateToProps = ({shoes, categories}, props) =>{
   return{
     shoes,
-    categories
+    categories,
+    props
   }
 }
 
