@@ -22,6 +22,7 @@ const setCategories = (categories) =>{
   }
 }
 
+
 const getUsers = ()=>{
   return null
 }
