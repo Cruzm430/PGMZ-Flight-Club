@@ -1,6 +1,5 @@
 import {combineReducers} from 'redux';
 import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE} from './constants';
-import { create } from 'domain';
 
 const shoesReducer = (state = [], action)=>{
   if(action.type === SET_SHOES){
@@ -12,8 +11,16 @@ const shoesReducer = (state = [], action)=>{
   return state
 }
 
+const categoriesReducer = (state = [], action) => {
+  if(action.type === SET_CATEGORIES){
+    return action.categories
+  }
+  return state
+}
+
 const reducer = combineReducers({
-  shoes:shoesReducer
+  shoes:shoesReducer,
+  categories:categoriesReducer
 })
 
 export default reducer
