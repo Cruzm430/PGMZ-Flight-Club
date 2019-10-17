@@ -49,5 +49,6 @@ export{
   getUsers,
   getShoes,
   getCategories,
+  setUsers,
   attemptLogin
 }
