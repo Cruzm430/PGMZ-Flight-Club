@@ -4,7 +4,10 @@ import {combineReducers} from 'redux';
 import {SET_USERS, SET_SHOES, SET_CATEGORIES, SEARCH_BY_NAME} from './constants';
 =======
 import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE} from './constants';
+<<<<<<< HEAD
 import { create } from 'domain';
+>>>>>>> master
+=======
 >>>>>>> master
 
 const shoesReducer = (state = [], action)=>{
@@ -29,8 +32,20 @@ const shoesReducer = (state = [], action)=>{
 >>>>>>> master
 }
 
+const categoriesReducer = (state = [], action) => {
+  if(action.type === SET_CATEGORIES){
+    return action.categories
+  }
+  return state
+}
+
 const reducer = combineReducers({
+<<<<<<< HEAD
   shoes: shoesReducer
+=======
+  shoes:shoesReducer,
+  categories:categoriesReducer
+>>>>>>> master
 })
 
 export default reducer;

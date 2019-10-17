@@ -11,14 +11,16 @@ import AddShoe from './Components/AddShoe'
 class App extends Component{
   componentDidMount(){
     this.props.getShoes();
+    this.props.getCategories()
   }
   render(){
+    console.log(this.props.categories)
     return(
       <HashRouter>
         <Route component={Header}/>
         <Switch>
         <Route exact path='/' component={Home}/> 
-        <Route exact path= '/hello' component={AddShoe}/>
+        <Route exact path='/add' component={AddShoe}/>
         </Switch>
           {/*<Route/>
           <Route/>*/}
