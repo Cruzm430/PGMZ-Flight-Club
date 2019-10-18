@@ -19,16 +19,15 @@ app.get('/shoes', (req, res, next) => {
     .catch(next);
 })
 
-app.get('/shoes/:id', (req, res, next) => {
+app.get('/shoes/filter/:catId', (req, res, next) => {
   Shoe.findAll({
     where: {
-      categoryId: req.params.id
+      categoryId: req.params.catId
     }
   })
     .then(shoes => res.send(shoes))
     .catch(next);
 })
-
 
 //could very well be optional!
 app.get('/shoes/search/:str', (req, res, next) => {

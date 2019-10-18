@@ -6,6 +6,7 @@ import Home from './Components/Home';
 import Header from './Components/Header'
 import AddShoe from './Components/AddShoe'
 import Search from './Components/Search'
+import CatFilter from './Components/CatFilter'
 
 class App extends Component{
   componentDidMount(){
@@ -14,9 +15,10 @@ class App extends Component{
   }
   render(){
     console.log(this.props.categories)
-    return(
+    return (
       <div>
         <Search />
+        <CatFilter />
         <HashRouter>
           <Route component={Header}/>
           <Switch>
