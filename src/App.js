@@ -3,39 +3,27 @@ import {HashRouter, Switch, Route, Redirect} from 'react-router-dom';
 import {actions} from './store';
 import {connect} from 'react-redux';
 import Home from './Components/Home';
-
-// class App extends Component{
-//   render(){
-//     return(
-//       <hr/>
-//     )
-//   }
-// }
+import Header from './Components/Header'
+import AddShoe from './Components/AddShoe'
 
 
-// const App = () =>{
-//   return (
-//     null
-//   )
-// }
 
 class App extends Component{
   componentDidMount(){
-    //this.props.getUsers();
     this.props.getShoes();
-    //this.props.getCategories();
+    this.props.getCategories()
   }
   render(){
+    console.log(this.props.categories)
     return(
       <HashRouter>
-        <Route component={Home}/>
-        {/* <Route/>
-        <Route/>
+        <Route component={Header}/>
         <Switch>
-          
-          <Route/>
-          <Route/>
-        </Switch> */}
+        <Route exact path='/' component={Home}/> 
+        <Route exact path='/add' component={AddShoe}/>
+        </Switch>
+          {/*<Route/>
+          <Route/>*/}
       </HashRouter>
     )
   }

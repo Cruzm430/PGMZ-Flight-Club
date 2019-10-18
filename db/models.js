@@ -43,10 +43,6 @@ const Shoe = conn.define('shoe',{
   price:{
     type:DECIMAL,
     allowNull:false
-  },
-  size:{
-    type:DECIMAL,
-    allowNull:false
   }
 })
 

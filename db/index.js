@@ -24,13 +24,13 @@ const syncAndSeed = async() =>{
 
   const shoes =[
     {imageURL:'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQUul0PJOFk3fcQvngDepYQ3i-zVmUhPc8WWNUBJj4nRh2B2QN9DHdhIJWENzToI91g8Addu9xOqKclH62Owj68ALkv9OSuApoEUjdavFv5hYuVUaMiJGuW&usqp=CAc', 
-    name:'Concord 11', price:400, size:11, categoryId: Jordan.id},
+    name:'Concord 11', price:400, categoryId: Jordan.id},
     {imageURL:'https://www.sepsport.com/media/x490/Nike_Air_Max_Shoes/Air_Max_270/Supreme_x_Nike_Air_MAX_270_University_Red_White_Black_Running_Shoes_AH8050-610.jpg', 
-    name:'Supreme', price:850, size:6, categoryId: Luxury.id},
+    name:'Supreme', price:850, categoryId: Luxury.id},
     {imageURL:'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQp0oZ50XJga0GjfFzyO-Os209mkVI8wwE200SeuGGbXO45aZPh7_T33ixp1_HZvEQjgybLUsCGSiGwen9YoAlszW54WrbOMvnVUiF4Jv5dC_6Os4ev9npEOg8&usqp=CAc', 
-    name:'Dr. Doom Foamposite', price:390, size:8, categoryId: Nike.id},
+    name:'Dr. Doom Foamposite', price:390, categoryId: Nike.id},
     {imageURL:'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSrPPJxypqFyRr5kBj_v415imD7e01S_YNEsvdPpYgjtzsjosJj0ST_CIAzJXplIgy64JTbcDve7_mfISmFJ_GBoj-LfkEfx1iG4U88Iaf1dygXKna8tF5X&usqp=CAc', 
-    name:'Air Force One Black',price:100, size:13, categoryId: Nike.id}
+    name:'Air Force One Black',price:100, categoryId: Nike.id}
   ]
 
   

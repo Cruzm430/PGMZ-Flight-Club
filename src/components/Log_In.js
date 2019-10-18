@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 
 
 class _Login extends Component{
+    constructor () 
+        super{
+
+        }
     render(){
                     const { attemptLogin } = this.props;
                     console.log(props)
