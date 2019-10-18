@@ -62,8 +62,10 @@ const getCategories = () =>{
 }
 
 const searchByName = (searchText) => {
+  if (!searchText) return (getShoes());
   return async (dispatch) => {
-    const shoes = (await axios.get(`/shoes/search/${searchText}`))
+    const shoes = (await axios.get(`/shoes/search/${searchText}`)).data
+    return dispatch(setShoes(shoes));
   }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { actions } from '../store';
 import { connect } from 'react-redux';
 
@@ -23,6 +23,6 @@ class Search extends Component {
 
 export default connect(null, (dispatch) => {
   return {
-    search: (searchText) => dispatch(actions.searchByName(searchText));
+    searchByName: (searchText) => dispatch(actions.searchByName(searchText))
   }
-})
+})(Search);

@@ -35,11 +35,13 @@ app.get('/shoes/search/:str', (req, res, next) => {
   Shoe.findAll({
     where: {
       name: {
-        [Op.contains]: req.params.str
+        [Op.iLike]: `%${req.params.str}%`
       }
     }
   })
-    .then(shoes => res.send(shoes))
+    .then(shoes => {
+      res.send(shoes);
+    })
     .catch(next);
 })
 
