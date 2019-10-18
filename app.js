@@ -4,6 +4,8 @@ app.use(express.json());
 const path = require('path');
 const db = require('./db/index');
 const { User, Shoe, Category } = db.models;
+const Sequelize = require('sequelize');
+const { Op } = Sequelize;
 
 module.exports = app;
 
@@ -24,6 +26,22 @@ app.get('/shoes/:id', (req, res, next) => {
     }
   })
     .then(shoes => res.send(shoes))
+    .catch(next);
+})
+
+
+//could very well be optional!
+app.get('/shoes/search/:str', (req, res, next) => {
+  Shoe.findAll({
+    where: {
+      name: {
+        [Op.iLike]: `%${req.params.str}%`
+      }
+    }
+  })
+    .then(shoes => {
+      res.send(shoes);
+    })
     .catch(next);
 })
 

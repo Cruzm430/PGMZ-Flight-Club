@@ -1,4 +1,4 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, SEARCH_BY_NAME, CREATE_SHOE} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -22,6 +22,12 @@ const setCategories = (categories) =>{
   }
 }
 
+const _searchByName = (shoes) => {
+  return {
+    shoes,
+    type: SEARCH_BY_NAME
+  }
+}
 const _createShoe = (shoe) =>{
   return{
     shoe,
@@ -55,9 +61,18 @@ const getCategories = () =>{
   }
 }
 
-export{
+const searchByName = (searchText) => {
+  if (!searchText) return (getShoes());
+  return async (dispatch) => {
+    const shoes = (await axios.get(`/shoes/search/${searchText}`)).data
+    return dispatch(setShoes(shoes));
+  }
+}
+
+export {
   getUsers,
   getShoes,
   getCategories,
+  searchByName,
   createShoe
 }

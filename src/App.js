@@ -5,8 +5,7 @@ import {connect} from 'react-redux';
 import Home from './Components/Home';
 import Header from './Components/Header'
 import AddShoe from './Components/AddShoe'
-
-
+import Search from './Components/Search'
 
 class App extends Component{
   componentDidMount(){
@@ -16,21 +15,24 @@ class App extends Component{
   render(){
     console.log(this.props.categories)
     return(
-      <HashRouter>
-        <Route component={Header}/>
-        <Switch>
-        <Route exact path='/' component={Home}/> 
-        <Route exact path='/add' component={AddShoe}/>
-        </Switch>
-          {/*<Route/>
-          <Route/>*/}
-      </HashRouter>
+      <div>
+        <Search />
+        <HashRouter>
+          <Route component={Header}/>
+          <Switch>
+          <Route exact path='/' component={Home}/> 
+          <Route exact path='/add' component={AddShoe}/>
+          </Switch>
+            {/*<Route/>
+            <Route/>*/}
+        </HashRouter>
+      </div>
     )
   }
 }
 
 const mapStateToProps = ({users, shoes, categories})=>{
-  return{
+  return {
     users,
     shoes,
     categories
@@ -38,7 +40,7 @@ const mapStateToProps = ({users, shoes, categories})=>{
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return{
+  return {
     getUsers: () => dispatch(actions.getUsers()),
     getShoes: () => dispatch(actions.getShoes()),
     getCategories: () => dispatch(actions.getCategories())
