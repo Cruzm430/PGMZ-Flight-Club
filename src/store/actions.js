@@ -67,10 +67,7 @@ export{
   getUsers,
   getShoes,
   getCategories,
-<<<<<<< HEAD
   setUsers,
-  attemptLogin
-=======
+  attemptLogin,
   createShoe
->>>>>>> master
 }
