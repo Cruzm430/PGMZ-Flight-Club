@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_AUTH} from './constants';
-=======
 import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE} from './constants';
->>>>>>> master
 import axios from 'axios';
 
 const setUsers = (users) => {
