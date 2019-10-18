@@ -1,37 +1,31 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, SEARCH_BY_NAME, CREATE_SHOE} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
-  return{
+  return {
     users,
     type:SET_USERS
   }
 }
 
 const setShoes = (shoes)=> {
-  return{
+  return {
     shoes,
-    type:SET_SHOES
+    type: SET_SHOES
   }
 }
 
 const setCategories = (categories) =>{
-  return{
+  return {
     categories,
     type: SET_CATEGORIES
   }
 }
 
-const _searchByName = (shoes) => {
-  return {
-    shoes,
-    type: SEARCH_BY_NAME
-  }
-}
 const _createShoe = (shoe) =>{
-  return{
+  return {
     shoe,
-    type:CREATE_SHOE
+    type: CREATE_SHOE
   }
 }
 
@@ -69,10 +63,20 @@ const searchByName = (searchText) => {
   }
 }
 
+const searchByCat = (catKey) => {
+  console.log(catKey);
+  if (catKey === DUMMY_KEY) return (getShoes());
+  return async (dispatch) => {
+    const shoes = (await axios.get(`/shoes/filter/${catKey}`)).data
+    return dispatch(setShoes(shoes));
+  }
+}
+
 export {
   getUsers,
   getShoes,
   getCategories,
   searchByName,
+  searchByCat,
   createShoe
 }
