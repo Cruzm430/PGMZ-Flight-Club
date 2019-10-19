@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import Home from './Components/Home';
 import Header from './Components/Header'
 import AddShoe from './Components/AddShoe'
-
-
+import Search from './Components/Search'
+import CatFilter from './Components/CatFilter'
 
 class App extends Component{
   componentDidMount(){
@@ -26,17 +26,18 @@ class App extends Component{
   }
 }
 
-const mapStateToProps = ({email, password, shoes, categories})=>{
+const mapStateToProps = ({email, password, users, shoes, categories})=>{
   return{
+    users,
+    shoes, 
+    categories,
     email,
     password,
-    shoes,
-    categories
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return{
+  return {
     getUsers: () => dispatch(actions.getUsers()),
     getShoes: () => dispatch(actions.getShoes()),
     getCategories: () => dispatch(actions.getCategories())

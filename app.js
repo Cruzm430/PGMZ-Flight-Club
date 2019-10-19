@@ -6,6 +6,8 @@ const path = require('path');
 const db = require('./db/index');
 const jwt = require('jsonwebtoken')
 const { User, Shoe, Category } = db.models;
+const Sequelize = require('sequelize');
+const { Op } = Sequelize;
 
 module.exports = app;
 
@@ -20,16 +22,31 @@ app.get('/shoes', (req, res, next) => {
     .catch(next);
 })
 
-app.get('/shoes/:id', (req, res, next) => {
+app.get('/shoes/filter/:catId', (req, res, next) => {
   Shoe.findAll({
     where: {
-      categoryId: req.params.id
+      categoryId: req.params.catId
     }
   })
     .then(shoes => res.send(shoes))
     .catch(next);
 })
- 
+
+//could very well be optional!
+app.get('/shoes/search/:str', (req, res, next) => {
+  Shoe.findAll({
+    where: {
+      name: {
+        [Op.iLike]: `%${req.params.str}%`
+      }
+    }
+  })
+    .then(shoes => {
+      res.send(shoes);
+    })
+    .catch(next);
+})
+
 app.post('/shoes', (req,res,next)=>{
     Shoe.create(req.body)
     .then(shoe=> res.send(shoe))
