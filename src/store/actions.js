@@ -1,4 +1,4 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, SET_AUTH} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -29,9 +29,15 @@ const _createShoe = (shoe) =>{
   }
 }
 
-
 const getUsers = ()=>{
   return null
+}
+
+const _login = (auth) => {
+    return{
+        auth,
+        type: SET_AUTH
+    }
 }
 
 const getShoes = () =>{
@@ -55,19 +61,21 @@ const getCategories = () =>{
   }
 }
 
-const attemptLogin = (username) => {
-    console.log('hi')
+const attemptLogin = (user) => {
     return async(dispatch) => {
-        const auth = (await axios.post('/api/sessions', {username}).data)
-        dispatch({ type: SET_AUTH, auth})
+        const auth =  await axios.post('/api/sessions', user)
+        console.log(auth.data)
+        return dispatch(_login(auth.data))
     };
 };
+
 
 export{
   getUsers,
   getShoes,
   getCategories,
   setUsers,
+  _login,
   attemptLogin,
   createShoe
 }

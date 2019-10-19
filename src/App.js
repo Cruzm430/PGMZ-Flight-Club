@@ -14,7 +14,6 @@ class App extends Component{
     this.props.getCategories()
   }
   render(){
-    console.log(this.props.categories)
     return(
       <HashRouter>
         <Route component={Header}/>
@@ -22,16 +21,15 @@ class App extends Component{
         <Route exact path='/' component={Home}/> 
         <Route exact path='/add' component={AddShoe}/>
         </Switch>
-          {/*<Route/>
-          <Route/>*/}
       </HashRouter>
     )
   }
 }
 
-const mapStateToProps = ({users, shoes, categories})=>{
+const mapStateToProps = ({email, password, shoes, categories})=>{
   return{
-    users,
+    email,
+    password,
     shoes,
     categories
   }

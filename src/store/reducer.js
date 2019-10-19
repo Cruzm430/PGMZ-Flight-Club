@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, SET_AUTH} from './constants';
 
 const shoesReducer = (state = [], action)=>{
   if(action.type === SET_SHOES){

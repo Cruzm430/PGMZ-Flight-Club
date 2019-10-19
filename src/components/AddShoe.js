@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
-import {actions} from '../store'
+import {actions} from '../store' 
 
 class AddShoe extends Component{
   constructor(){
@@ -23,8 +23,8 @@ class AddShoe extends Component{
   onChange(ev){
     let value = ev.target.value
     this.setState({[ev.target.name]: value})
-    console.log(this.state)
-    console.log(this.props)
+    //console.log(this.state)
+    //console.log(this.props)
   }
   render(){
     const {imageURL, name, price} = this.state
