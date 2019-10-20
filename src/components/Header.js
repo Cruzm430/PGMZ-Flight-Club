@@ -7,7 +7,6 @@ import Welcome from './Welcome'
 const Header = ({shoes, auth}) => {
   return(
       <nav>
-        {console.log(auth)}
         <h1>PMGZ Flight Club</h1>
         <Link to='/add'>Create</Link>
         <HashRouter>
