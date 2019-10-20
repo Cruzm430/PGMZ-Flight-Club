@@ -14,30 +14,25 @@ class App extends Component{
     this.props.getCategories()
   }
   render(){
-    console.log(this.props.categories)
-    return (
-      <div>
-        <Search />
-        <CatFilter />
-        <HashRouter>
-          <Route component={Header}/>
-          <Switch>
-          <Route exact path='/' component={Home}/> 
-          <Route exact path='/add' component={AddShoe}/>
-          </Switch>
-            {/*<Route/>
-            <Route/>*/}
-        </HashRouter>
-      </div>
+    return(
+      <HashRouter>
+        <Route component={Header}/>
+        <Switch>
+        <Route exact path='/' component={Home}/> 
+        <Route exact path='/add' component={AddShoe}/>
+        </Switch>
+      </HashRouter>
     )
   }
 }
 
-const mapStateToProps = ({users, shoes, categories})=>{
-  return {
+const mapStateToProps = ({email, password, users, shoes, categories})=>{
+  return{
     users,
-    shoes,
-    categories
+    shoes, 
+    categories,
+    email,
+    password,
   }
 }
 

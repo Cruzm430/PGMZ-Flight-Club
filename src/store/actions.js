@@ -1,4 +1,4 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -29,9 +29,15 @@ const _createShoe = (shoe) =>{
   }
 }
 
-
 const getUsers = ()=>{
   return null
+}
+
+const _login = (auth) => {
+    return{
+        auth,
+        type: SET_AUTH
+    }
 }
 
 const getShoes = () =>{
@@ -55,27 +61,38 @@ const getCategories = () =>{
   }
 }
 
+const attemptLogin = (user) => {
+    return async(dispatch) => {
+        const auth =  await axios.post('/api/sessions', user)
+        console.log(auth.data)
+        return dispatch(_login(auth.data))
+    };
+};
+
 const searchByName = (searchText) => {
-  if (!searchText) return (getShoes());
-  return async (dispatch) => {
-    const shoes = (await axios.get(`/shoes/search/${searchText}`)).data
-    return dispatch(setShoes(shoes));
+    if (!searchText) return (getShoes());
+    return async (dispatch) => {
+      const shoes = (await axios.get(`/shoes/search/${searchText}`)).data
+      return dispatch(setShoes(shoes));
+    }
   }
-}
-
+  
 const searchByCat = (catKey) => {
-  console.log(catKey);
-  if (catKey === DUMMY_KEY) return (getShoes());
-  return async (dispatch) => {
-    const shoes = (await axios.get(`/shoes/filter/${catKey}`)).data
-    return dispatch(setShoes(shoes));
-  }
+    console.log(catKey);
+    if (catKey === DUMMY_KEY) return (getShoes());
+    return async (dispatch) => {
+        const shoes = (await axios.get(`/shoes/filter/${catKey}`)).data
+        return dispatch(setShoes(shoes));
+    }
 }
 
-export {
+export{
   getUsers,
   getShoes,
   getCategories,
+  setUsers,
+  _login,
+  attemptLogin,
   searchByName,
   searchByCat,
   createShoe
