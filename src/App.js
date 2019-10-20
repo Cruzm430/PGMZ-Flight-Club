@@ -15,13 +15,17 @@ class App extends Component{
   }
   render(){
     return(
-      <HashRouter>
-        <Route component={Header}/>
-        <Switch>
-        <Route exact path='/' component={Home}/> 
-        <Route exact path='/add' component={AddShoe}/>
-        </Switch>
-      </HashRouter>
+      <div>
+        <Search />
+        <CatFilter />
+        <HashRouter>
+          <Route component={Header}/>
+          <Switch>
+          <Route exact path='/' component={Home}/> 
+          <Route exact path='/add' component={AddShoe}/>
+          </Switch>
+        </HashRouter>
+      </div>
     )
   }
 }
