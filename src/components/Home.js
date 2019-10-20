@@ -12,7 +12,7 @@ const Home = ({shoes, auth, logout}) =>{
       {
         shoes.map(shoe=><div key={shoe.id}>
           <div><img src={shoe.imageURL}/></div>
-        {shoe.name}: ${shoe.price}</div>)
+        <a href={`/product/${shoe.id}`}>{shoe.name}: ${shoe.price}</a></div>)
       }
     </div>
   )
