@@ -1,5 +1,4 @@
 const conn = require('./conn');
-const jwt = require('jsonwebtoken')
 const {Sequelize} = conn;
 const {UUID, UUIDV4, STRING, DECIMAL, BOOLEAN} = Sequelize
 
@@ -26,12 +25,6 @@ const User = conn.define('user',{
     allowNull:false
   }
 })
-
-// CURRENTLY NOT PICKING UP THIS MODEL. I NEED TO FIGURE OUT HOW TO EXPORT CORRECTLY
-// User.generateAuthToken = function() {
-//     const token = jwt.sign({id: this.id}, 'private key here');
-//     return token
-// }
 
 const Shoe = conn.define('shoe',{
   id:{

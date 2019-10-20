@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Login from './Login'
-import Welcome from './Welcome'
 
-const Home = ({shoes, auth, logout}) =>{
+const Home = ({shoes}) =>{
+  console.log(shoes)
   return(
     <div>
       <h1>

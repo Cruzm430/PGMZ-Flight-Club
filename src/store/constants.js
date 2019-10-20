@@ -1,7 +1,6 @@
 const SET_USERS = 'SET_USERS'
 const SET_SHOES = 'SET_SHOES'
 const SET_CATEGORIES = 'SET_CATEGORIES'
-const SET_AUTH = 'SET_AUTH'
 const CREATE_SHOE = 'CREATE_SHOE'
 const DUMMY_KEY = 'abc'
 
@@ -9,7 +8,6 @@ export {
   SET_USERS,
   SET_SHOES,
   SET_CATEGORIES,
-  SET_AUTH,
   CREATE_SHOE,
   DUMMY_KEY
 }
