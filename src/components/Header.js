@@ -1,5 +1,8 @@
 import React from 'react';
 import {Link, HashRouter, Route, Switch  } from 'react-router-dom';
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/ToolBar'
+import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux';
 import Login from './Login'
 import Welcome from './Welcome'
@@ -7,6 +10,7 @@ import Welcome from './Welcome'
 const Header = ({shoes, auth}) => {
   return(
       <nav>
+        {console.log(auth)}
         <h1>PMGZ Flight Club</h1>
         <Link to='/add'>Create</Link>
         <HashRouter>
@@ -33,3 +37,19 @@ const mapStateToProps = ({shoes, auth}) =>{
 }
 
 export default connect(mapStateToProps)(Header)
+
+// const Header = ({shoes, auth})=>{
+//   return(
+//     <div>
+
+//       <AppBar>
+        
+//         <Typography variant='h6' color='inherit'>PMGZ Flight Club</Typography>
+//         <Typography component={Login}></Typography>
+//         <Typography >Create</Typography>
+
+//       </AppBar>
+//     </div>
+//   )
+// }
+
