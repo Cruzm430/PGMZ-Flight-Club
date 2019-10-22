@@ -67,6 +67,13 @@ app.post('/shoes', (req,res,next)=>{
     .catch(next)
 })
 
+app.delete('/api/shoes/:id', (req, res, next) => {
+  Shoe.findByPk(req.params.id)
+    .then(shoe => shoe.destroy())
+    .then(res.sendStatus(204))
+    .catch(next);
+})
+
 
 
 app.post('/api/login', async (req,res,next) => {

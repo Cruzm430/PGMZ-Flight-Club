@@ -6,22 +6,23 @@ import Welcome from './Welcome'
 
 const Header = ({shoes, auth}) => {
   return(
-      <nav>
-        <h1>PMGZ Flight Club</h1>
-        <Link to='/add'>Create</Link>
-        <HashRouter>
-          <Switch>
-          {
-            auth && (<Route path='/' component= { Welcome } exact/>)
-          }
-          {
-            !auth && (<Route path='/' component= { Login } exact/>)
-          }
-          </Switch>
-        </HashRouter>
-        <h3>Register</h3>
-        <h3>Login</h3>
-      </nav>
+    <nav>
+      {console.log(auth)}
+      <h1>PMGZ Flight Club</h1>
+      <Link to='/add'>Create</Link>
+      <HashRouter>
+        <Switch>
+        {
+          auth && (<Route path='/' component= { Welcome } exact/>)
+        }
+        {
+          !auth && (<Route path='/' component= { Login } exact/>)
+        }
+        </Switch>
+      </HashRouter>
+      <h3>Register</h3>
+      <h3>Login</h3>
+    </nav>
   )
 }
 
@@ -33,3 +34,19 @@ const mapStateToProps = ({shoes, auth}) =>{
 }
 
 export default connect(mapStateToProps)(Header)
+
+// const Header = ({shoes, auth})=>{
+//   return(
+//     <div>
+
+//       <AppBar>
+        
+//         <Typography variant='h6' color='inherit'>PMGZ Flight Club</Typography>
+//         <Typography component={Login}></Typography>
+//         <Typography >Create</Typography>
+
+//       </AppBar>
+//     </div>
+//   )
+// }
+

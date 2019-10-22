@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { actions } from '../store';
 
 const sizeArray = () => {
   const arr = [];
@@ -32,8 +33,8 @@ class Shoe extends Component {
           {sizes.map(size => <option key={size} value={size}>{size}</option>)}
         </select>
         <button>Add To Cart</button>
-        <button style='color:red'>Update Shoe</button>
-        <button style='color:red'>Delete Shoe</button>
+        <button style={{color: 'red'}}>Update Shoe</button>
+        <button style={{color: 'red'}} onClick={() => deleteShoe(shoe)}>Delete Shoe</button>
       </div>
     )
   }
@@ -43,4 +44,8 @@ export default connect(({shoes}) => {
   return {
     shoes
   }
-}, null)(Shoe);
+}, (dispatch) => {
+  return {
+    deleteShoe: (shoe) => dispatch(actions.deleteShoe(shoe))
+  }
+})(Shoe);

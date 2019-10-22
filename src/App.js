@@ -24,9 +24,9 @@ class App extends Component{
         <Route component={CatFilter}/>
         <Route component={Search}/>
         <Switch>
-        <Route exact path='/' component={Home}/> 
-        <Route exact path='/add' component={AddShoe}/>
-        <Route path='/product/:id' component={Shoe} />
+          <Route exact path='/' component={Home}/> 
+          <Route exact path='/add' component={AddShoe}/>
+          <Route path='/product/:id' component={Shoe} />
         </Switch>
       </HashRouter>
     )
