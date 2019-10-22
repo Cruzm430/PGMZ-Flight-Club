@@ -4,12 +4,19 @@ import {actions} from '../store'
 
 
 class Welcome extends React.Component {
-    
+    constructor() {
+        super();
+    this.onClick = this.onClick.bind(this)
+    }
+    onClick() {
+        this.props.logout()
+    }
     render (){
+        const { onClick } = this
         return (
             <div>
                 <div>Welcome {this.props.auth.name}</div>
-                <button>Log Out</button>
+                <button onClick={onClick}>Log Out</button>
             </div>
         )
     }
@@ -24,8 +31,11 @@ const mapStateToProps = ({auth}, props) =>{
   
   const mapDispatchToProps = (dispatch) =>{
     return{
-        dispatch 
+        logout: (auth) => {
+            dispatch(actions.logout(auth))
+        } 
     }
   }
   
 export default connect(mapStateToProps, mapDispatchToProps)(Welcome)
+

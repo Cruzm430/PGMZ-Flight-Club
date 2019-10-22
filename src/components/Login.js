@@ -36,8 +36,6 @@ class Login extends React.Component{
 
   const mapStateToProps = ({email, password}, props) =>{
     return{
-      email,
-      password,
       props
     }
   }

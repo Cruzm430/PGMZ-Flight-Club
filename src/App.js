@@ -12,34 +12,32 @@ import Shoe from './Components/Shoe'
 
 class App extends Component{
   componentDidMount(){
-    this.props.getShoes();
+    this.props.getShoes()
     this.props.getCategories()
+    this.props.attemptSessionLogin()
+    .catch(ex => console.log(ex));
   }
   render(){
     return (
-      <div>
-        <Search />
-        <CatFilter />
-        <HashRouter>
-          <Route component={Header}/>
-          <Switch>
-          <Route exact path='/' component={Home}/> 
-          <Route exact path='/add' component={AddShoe}/>
-          <Route path='/product/:id' component={Shoe} />
-          </Switch>
-        </HashRouter>
-      </div>
+      <HashRouter>
+        <Route component={Header}/>
+        <Route component={CatFilter}/>
+        <Route component={Search}/>
+        <Switch>
+        <Route exact path='/' component={Home}/> 
+        <Route exact path='/add' component={AddShoe}/>
+        <Route path='/product/:id' component={Shoe} />
+        </Switch>
+      </HashRouter>
     )
   }
 }
 
-const mapStateToProps = ({email, password, users, shoes, categories})=>{
+const mapStateToProps = ({ users, shoes, categories})=>{
   return{
     users,
     shoes, 
-    categories,
-    email,
-    password,
+    categories
   }
 }
 
@@ -47,7 +45,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getUsers: () => dispatch(actions.getUsers()),
     getShoes: () => dispatch(actions.getShoes()),
-    getCategories: () => dispatch(actions.getCategories())
+    getCategories: () => dispatch(actions.getCategories()),
+    attemptSessionLogin: () => dispatch(actions.attemptSessionLogin())
   }
 }
 

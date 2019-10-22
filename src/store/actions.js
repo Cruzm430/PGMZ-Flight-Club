@@ -63,11 +63,35 @@ const getCategories = () =>{
 
 const attemptLogin = (user) => {
     return async(dispatch) => {
-        const auth =  await axios.post('/api/sessions', user)
-        console.log(auth.data)
+        const auth =  await axios.post('/api/login', user)
+        // Use auth token for future implementation
+        // window.localStorage.setItem('x-auth-token', JSON.stringify(auth.data.token))
+        window.localStorage.setItem('user', JSON.stringify(auth.data.user))
         return dispatch(_login(auth.data))
     };
 };
+
+const attemptSessionLogin = ()=> {
+    return async(dispatch)=> {
+        const user = window.localStorage.getItem('user')
+        JSON.parse(user)
+        if(!user) {
+            return
+        }
+        else {
+            dispatch({ type: 'SET_AUTH', auth: user});
+        }
+    };
+  };
+  
+
+const logout = ()=> {
+    return async(dispatch)=> {
+        window.localStorage.clear('user')
+      await axios.delete('/api/sessions');
+      dispatch({ type: 'SET_AUTH', auth: null});
+    };
+  };
 
 const searchByName = (searchText) => {
     if (!searchText) return (getShoes());
@@ -78,7 +102,6 @@ const searchByName = (searchText) => {
   }
   
 const searchByCat = (catKey) => {
-    console.log(catKey);
     if (catKey === DUMMY_KEY) return (getShoes());
     return async (dispatch) => {
         const shoes = (await axios.get(`/shoes/filter/${catKey}`)).data
@@ -92,6 +115,8 @@ export{
   getCategories,
   setUsers,
   _login,
+  attemptSessionLogin,
+  logout,
   attemptLogin,
   searchByName,
   searchByCat,

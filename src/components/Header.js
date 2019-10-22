@@ -6,23 +6,22 @@ import Welcome from './Welcome'
 
 const Header = ({shoes, auth}) => {
   return(
-    <nav>
-      {console.log(auth)}
-      <h1>PMGZ Flight Club</h1>
-      <Link to='/add'>Create</Link>
-      <HashRouter>
-        <Switch>
-        {
-          auth && (<Route path='/' component= { Welcome } exact/>)
-        }
-        {
-          !auth && (<Route path='/' component= { Login } exact/>)
-        }
-        </Switch>
-      </HashRouter>
-      <h3>Register</h3>
-      <h3>Login</h3>
-    </nav>
+      <nav>
+        <h1>PMGZ Flight Club</h1>
+        <Link to='/add'>Create</Link>
+        <HashRouter>
+          <Switch>
+          {
+            auth && (<Route path='/' component= { Welcome } exact/>)
+          }
+          {
+            !auth && (<Route path='/' component= { Login } exact/>)
+          }
+          </Switch>
+        </HashRouter>
+        <h3>Register</h3>
+        <h3>Login</h3>
+      </nav>
   )
 }
 
