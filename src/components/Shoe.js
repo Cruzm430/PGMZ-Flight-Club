@@ -1,3 +1,4 @@
+/* eslint-disable react/button-has-type */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { actions } from '../store';
@@ -17,13 +18,19 @@ class Shoe extends Component {
       size: 0
     }
   }
+  componentDidMount() {
+    this.props.getShoes();
+  }
   componentDidUpdate() {
     if (!(this.state.size)) this.setState({size: 6});
   }
   render() {
     const sizes = sizeArray();
-    const { shoes, match } = this.props;
-    const shoe = shoes.find(_shoe => _shoe.id === match.params.id)
+    const { shoes, match, deleteShoe, history } = this.props;
+    const shoe = shoes.find(_shoe => _shoe.id === match.params.id);
+    if (!shoe){
+      return '....loading';
+    }
     return (
       <div>
         <img src={shoe.imageURL} alt={shoe.name} />
@@ -34,7 +41,13 @@ class Shoe extends Component {
         </select>
         <button>Add To Cart</button>
         <button style={{color: 'red'}}>Update Shoe</button>
-        <button style={{color: 'red'}} onClick={() => deleteShoe(shoe)}>Delete Shoe</button>
+        <button 
+          style={{color: 'red'}} 
+          onClick={() => {
+            deleteShoe(shoe);
+            history.push('/');
+          }}>Delete Shoe
+        </button>
       </div>
     )
   }
@@ -46,6 +59,7 @@ export default connect(({shoes}) => {
   }
 }, (dispatch) => {
   return {
-    deleteShoe: (shoe) => dispatch(actions.deleteShoe(shoe))
+    deleteShoe: (shoe) => dispatch(actions.deleteShoe(shoe)),
+    getShoes: () => dispatch(actions.getShoes())
   }
 })(Shoe);

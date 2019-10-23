@@ -18,6 +18,7 @@ class App extends Component{
     .catch(ex => console.log(ex));
   }
   render(){
+    console.log(this.props);
     return (
       <HashRouter>
         <Route component={Header}/>
