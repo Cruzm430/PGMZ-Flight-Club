@@ -7,6 +7,8 @@ import Header from './Components/Header'
 import AddShoe from './Components/AddShoe'
 import Search from './Components/Search'
 import CatFilter from './Components/CatFilter'
+import Shoe from './Components/Shoe'
+//can we refactor these?
 
 class App extends Component{
   componentDidMount(){
@@ -16,14 +18,16 @@ class App extends Component{
     .catch(ex => console.log(ex));
   }
   render(){
-    return(
+    console.log(this.props);
+    return (
       <HashRouter>
         <Route component={Header}/>
         <Route component={CatFilter}/>
         <Route component={Search}/>
         <Switch>
-        <Route exact path='/' component={Home}/> 
-        <Route exact path='/add' component={AddShoe}/>
+          <Route exact path='/' component={Home}/> 
+          <Route exact path='/add' component={AddShoe}/>
+          <Route path='/product/:id' component={Shoe} />
         </Switch>
       </HashRouter>
     )

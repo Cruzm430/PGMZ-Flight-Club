@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
@@ -8,6 +9,21 @@ import Typography from '@material-ui/core/Typography'
 import Login from './Login'
 import Welcome from './Welcome'
 
+// const Home = ({shoes, auth, logout})=>{
+//   return(
+//     <div>
+//       <h1>
+//         Check Our Inventory!
+//       </h1>
+//       {
+//         shoes.map(shoe=><div key={shoe.id}>
+//           <div><img src={shoe.imageURL}/></div>
+//         <Link to={`/product/${shoe.id}`}>{shoe.name}: ${shoe.price}</Link></div>)
+//       }
+//     </div>
+//   )
+// }
+
 const Home = ({shoes, auth, logout})=>{
   return(
     <div>
@@ -15,13 +31,14 @@ const Home = ({shoes, auth, logout})=>{
         {
           shoes.map(shoe=><Grid item xs={12} sm={6} lg={4} xl={3} key={shoe.id} style={{background:'lightGray', padding:'1rem'}}>
             <img src={shoe.imageURL} height={'350px'} width={'350px'}/>
-            <a><Typography >{shoe.name}: ${shoe.price}</Typography></a>
+            <Link to={`/product/${shoe.id}`}><Typography >{shoe.name}: ${shoe.price}</Typography></Link>
             </Grid>)
         }
       </Grid>
     </div>
   )
 }
+
 
 
 const mapStateToProps = ({shoes}) =>{
