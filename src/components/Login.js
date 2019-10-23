@@ -14,6 +14,7 @@ class Login extends React.Component{
         this.onSubmit = this.onSubmit.bind(this)
     }
     onSubmit(ev){
+      ev.preventDefault()
       const {email, password} = this.state
       this.props.attemptLogin({email, password})
       this.setState({email:'', password:''})
@@ -28,7 +29,7 @@ class Login extends React.Component{
             <form>
                 <input type="text" onChange={onChange} name="email" />
                 <input type="text" onChange={onChange} name="password" />
-                <button onClick={onSubmit} value="Log In">Log In</button>
+                <button onClick={onSubmit} value="Login">Log In</button>
             </form> 
         )
     }  

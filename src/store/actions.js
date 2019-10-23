@@ -33,9 +33,9 @@ const getUsers = ()=>{
   return null
 }
 
-const _login = (auth) => {
+const _login = (user) => {
     return{
-        auth,
+        user,
         type: SET_AUTH
     }
 }
@@ -64,22 +64,23 @@ const getCategories = () =>{
 const attemptLogin = (user) => {
     return async(dispatch) => {
         const auth =  await axios.post('/api/login', user)
-        // Use auth token for future implementation
-        // window.localStorage.setItem('x-auth-token', JSON.stringify(auth.data.token))
-        window.localStorage.setItem('user', JSON.stringify(auth.data.user))
-        return dispatch(_login(auth.data))
+        window.localStorage.setItem('authToken', auth.data.token)
+        return dispatch(_login(auth.data.returnUser))
     };
 };
 
 const attemptSessionLogin = ()=> {
     return async(dispatch)=> {
-        const user = window.localStorage.getItem('user')
-        JSON.parse(user)
+        const token = window.localStorage.getItem('authToken')
+        if(!token){
+            return
+        }
+        const user = (await axios.post('/api/attemptSessionLogin', {token: token})).data
         if(!user) {
             return
         }
         else {
-            dispatch({ type: 'SET_AUTH', auth: user});
+            dispatch({ type: 'SET_AUTH', user});
         }
     };
   };
@@ -87,9 +88,8 @@ const attemptSessionLogin = ()=> {
 
 const logout = ()=> {
     return async(dispatch)=> {
-        window.localStorage.clear('user')
-      await axios.delete('/api/sessions');
-      dispatch({ type: 'SET_AUTH', auth: null});
+        window.localStorage.clear('authToken')
+      dispatch({ type: 'SET_AUTH', user: null});
     };
   };
 

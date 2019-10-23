@@ -28,10 +28,18 @@ const User = conn.define('user',{
 })
 
 // CURRENTLY NOT PICKING UP THIS MODEL. I NEED TO FIGURE OUT HOW TO EXPORT CORRECTLY
-// User.generateAuthToken = function() {
-//     const token = jwt.sign({id: this.id}, 'private key here');
-//     return token
-// }
+// User.generateAuthToken = async function(credentials) {
+//     const {email, password} = credentials;
+//     const user = await this.findOne({
+//         where: {email, password}
+//     })
+//     if(user) {
+//         return jwt.sign({id: this.id, admin: this.admin}, process.env.SECRET);
+//     }
+User.findByToken = function(token){
+    const { id } = jwt.verify(token, process.env.SECRET)
+    return this.findByPK(id)
+}
 
 const Shoe = conn.define('shoe',{
   id:{
