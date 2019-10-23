@@ -80,7 +80,12 @@ app.delete('/api/shoes/:id', (req, res, next) => {
     .catch(next);
 })
 
-
+app.put('/api/shoes/:id', (req,res,next) => {
+  Shoe.findByPk(req.params.id)
+    .then(shoe => shoe.update(req.body))
+    .then(shoe => res.send(shoe))
+    .catch(next)
+})
 
 app.post('/api/login', async (req,res,next) => {
 //AUTHENTICATION

@@ -23,8 +23,6 @@ class AddShoe extends Component{
   onChange(ev){
     let value = ev.target.value
     this.setState({[ev.target.name]: value})
-    //console.log(this.state)
-    //console.log(this.props)
   }
   render(){
     const {imageURL, name, price} = this.state

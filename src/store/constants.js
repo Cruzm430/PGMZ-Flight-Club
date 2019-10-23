@@ -4,6 +4,7 @@ const SET_CATEGORIES = 'SET_CATEGORIES'
 const SET_AUTH = 'SET_AUTH'
 const CREATE_SHOE = 'CREATE_SHOE'
 const DELETE_SHOE = 'DELETE_SHOE'
+const EDIT_SHOE = 'EDIT_SHOE'
 const DUMMY_KEY = 'abc'
 
 export {
@@ -13,5 +14,6 @@ export {
   SET_AUTH,
   CREATE_SHOE,
   DELETE_SHOE,
+  EDIT_SHOE,
   DUMMY_KEY
 }

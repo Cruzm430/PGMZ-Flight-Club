@@ -1,4 +1,4 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH, DELETE_SHOE} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH, DELETE_SHOE, EDIT_SHOE} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -33,6 +33,13 @@ const _deleteShoe = (shoe) => {
   return {
     shoe,
     type: DELETE_SHOE
+  }
+}
+
+const _editShoe = (shoe) =>{
+  return{
+    shoe,
+    type: EDIT_SHOE
   }
 }
 
@@ -123,6 +130,13 @@ const deleteShoe = (shoe) => {
   }
 }
 
+const editShoe = (shoe) => {
+  return async(dispatch)=> {
+    await axios.put(`/api/shoes${shoe.id}`, shoe)
+    return dispatch(_editShoe(shoe))
+  }
+}
+
 export{
   getUsers,
   getShoes,
@@ -135,5 +149,6 @@ export{
   searchByName,
   searchByCat,
   createShoe,
-  deleteShoe
+  deleteShoe,
+  editShoe
 }

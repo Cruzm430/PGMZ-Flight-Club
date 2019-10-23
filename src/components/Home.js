@@ -27,11 +27,15 @@ import Welcome from './Welcome'
 const Home = ({shoes, auth, logout})=>{
   return(
     <div>
-      <Grid container spacing={24} style={{padding:24}}>
+      <Grid container spacing={8} style={{padding:24}}>
         {
           shoes.map(shoe=><Grid item xs={12} sm={6} lg={4} xl={3} key={shoe.id} style={{background:'lightGray', padding:'1rem'}}>
-            <img src={shoe.imageURL} height={'350px'} width={'350px'}/>
-            <Link to={`/product/${shoe.id}`}><Typography >{shoe.name}: ${shoe.price}</Typography></Link>
+            <Card style={{background:'darkGray'}}>
+              <CardMedia style={{height:0, paddingTop:'65%'}} image={shoe.imageURL}/>
+              <CardContent>
+              <Link to={`/product/${shoe.id}`} style={{textDecoration:'none', color:'white'}}><Typography style={{fontWeight:'bold'}} component='p'>{shoe.name}: ${shoe.price}</Typography></Link>
+              </CardContent>
+            </Card>
             </Grid>)
         }
       </Grid>
