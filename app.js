@@ -8,20 +8,25 @@ const jwt = require('jsonwebtoken')
 const { User, Shoe, Category } = db.models;
 const Sequelize = require('sequelize');
 const { Op } = Sequelize;
+const bodyParser = require('body-parser')
 
 module.exports = app;
 
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+ 
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 
-
-app.post('/api/attemptLogin', (req, res, next) => {
-    const token = req.body.token.toString()
-    const decodedPaylod = jwt.verify(token, 'private_key_here');   
-    try {
-        return decodedPaylod;
+app.post('/api/attemptSessionLogin', async (req, res, next) => {
+    const token = req.body.token
+    const decodedPayload = await jwt.decode(token, process.env.SECRET,(payload) => {
+        return payload
+    }); 
+    if(decodedPayload) {
+        res.send(decodedPayload)
     }
-    catch (ex) {
+    else {
         res.status(400).send('invalid token')
     }
 });
@@ -83,15 +88,15 @@ app.post('/api/login', async (req,res,next) => {
     if (!user) return res.status(400).send('Invalid email or password.');
 
     if (req.body.password !== user.password) return res.status(400).send('Invalid email or password.');
-    const token = jwt.sign({id: this.id}, 'private_key_here')
-    // SHOULD PULL FUNCTION FROM USER MODEL - CAN'T Currently connect though
-    //const token = await user.generateAuthToken()
-    res.status(200).header('x-auth-token', token).send({user, token});
-})
+    const token = jwt.sign({id: user.id, name: user.name, admin: user.admin}, process.env.SECRET)
 
-app.delete('/api/sessions', (req, res, next) => {
-    res.cookie('x-auth-token', null).sendStatus(204);
-  });
+    const returnUser = {
+        name: user.name,
+        id: user.id,
+        admin: user.admin
+    }
+    res.status(200).header('authToken', token).send({returnUser, token});
+})
 
 app.get('/categories',(req,res,next)=>{
   Category.findAll()

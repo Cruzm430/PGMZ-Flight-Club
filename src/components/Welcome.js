@@ -15,24 +15,24 @@ class Welcome extends React.Component {
         const { onClick } = this
         return (
             <div>
-                <div>Welcome {this.props.auth.name}</div>
+                <div>Welcome {this.props.user.name}</div>
                 <button onClick={onClick}>Log Out</button>
             </div>
         )
     }
 }
 
-const mapStateToProps = ({auth}, props) =>{
+const mapStateToProps = ({user}, props) =>{
     return{
-        auth,
+        user,
         props
     }
   }
   
   const mapDispatchToProps = (dispatch) =>{
     return{
-        logout: (auth) => {
-            dispatch(actions.logout(auth))
+        logout: (user) => {
+            dispatch(actions.logout(user))
         } 
     }
   }

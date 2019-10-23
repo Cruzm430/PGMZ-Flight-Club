@@ -28,14 +28,14 @@ const categoriesReducer = (state = [], action) => {
 
 const authReducer = (state = '', action) => {
     if(action.type === SET_AUTH) {
-        return action.auth
+        return action.user
     }
     return state
 }
 
 const reducer = combineReducers({
   shoes:shoesReducer,
-  auth:authReducer,
+  user:authReducer,
   categories:categoriesReducer
 })
 
