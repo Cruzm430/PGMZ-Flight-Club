@@ -1,6 +1,6 @@
 /* eslint-disable default-case */
 import {combineReducers} from 'redux';
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, SET_AUTH, DELETE_SHOE, EDIT_SHOE} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, SET_AUTH, DELETE_SHOE, UPDATE_SHOE} from './constants';
 
 const shoesReducer = (state = [], action)=>{
   switch (action.type) {
@@ -8,7 +8,7 @@ const shoesReducer = (state = [], action)=>{
       return action.shoes;
     case CREATE_SHOE:
       return [...state, action.shoe];
-    case EDIT_SHOE:
+    case UPDATE_SHOE:
       return state.map(_shoe=> _shoe.id === action.shoe.id ? action.shoe : _shoe)
     case DELETE_SHOE:
       return state.filter(shoe => shoe.id !== action.shoe.id);

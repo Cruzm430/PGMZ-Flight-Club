@@ -1,5 +1,6 @@
 /* eslint-disable react/button-has-type */
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 
@@ -40,7 +41,7 @@ class Shoe extends Component {
           {sizes.map(size => <option key={size} value={size}>{size}</option>)}
         </select>
         <button>Add To Cart</button>
-        <button style={{color: 'red'}}>Update Shoe</button>
+        <Link to={`/product/${shoe.id}/update`}><button style={{color: 'red'}}>Edit Shoe</button></Link>
         <button 
           style={{color: 'red'}} 
           onClick={() => {
