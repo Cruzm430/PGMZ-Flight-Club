@@ -11,7 +11,6 @@ import Welcome from './Welcome'
 const Header = ({shoes, user})=>{
     return(
       <div>
-        {console.log(user)}
         <AppBar>
         <Link to='/add'>Create</Link>
         <HashRouter>

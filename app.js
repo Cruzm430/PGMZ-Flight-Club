@@ -31,7 +31,6 @@ app.post('/api/attemptSessionLogin', async (req, res, next) => {
     }
 });
 
-
 app.get('/', (req, res, next)=> res.sendFile(path.join(__dirname, 'index.html')));
 
 app.get('/shoes', (req, res, next) => {
@@ -80,7 +79,12 @@ app.delete('/api/shoes/:id', (req, res, next) => {
     .catch(next);
 })
 
-
+app.put('/api/shoes/:id', (req,res,next) => {
+  Shoe.findByPk(req.params.id)
+    .then(shoe => shoe.update(req.body))
+    .then(shoe => res.send(shoe))
+    .catch(next)
+})
 
 app.post('/api/login', async (req,res,next) => {
 //AUTHENTICATION
@@ -98,8 +102,35 @@ app.post('/api/login', async (req,res,next) => {
     res.status(200).header('authToken', token).send({returnUser, token});
 })
 
-app.get('/categories',(req,res,next)=>{
+app.get('/categories', (req,res,next)=>{
   Category.findAll()
   .then(categories=>res.send(categories))
   .catch(next)
 })
+
+// app.get('/cart/:id', async (req,res,next)=>{
+//   const order = await Order.findOne({where:{userId: req.params.id}})
+//   if(order){
+//     return res.status(200).send(order)
+//   }
+//   else{
+//     res.status(400).send('no cart yet')
+//   }
+// })
+
+// app.post('/api/cart/:id', async (req,res,next)=> {
+//   const order = await Order.findOne({where:{userId:req.params.id}})
+//   if(order){
+//     LineItem.create(req.body)
+//     .then(newLine => res.send(newLine))
+//     .then(()=> res.sendStatus(201))
+//     .catch(next)
+//   }
+//   else{
+//     Order.create(req.params)
+//     .then(LineItem.create(req.body))
+//     .then(newLine => res.send(newLine))
+//     .then(()=>res.sendStatus(201))
+//     .catch(next)
+//   }
+// })
