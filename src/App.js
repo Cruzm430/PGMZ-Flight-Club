@@ -8,6 +8,7 @@ import AddShoe from './Components/AddShoe'
 import Search from './Components/Search'
 import CatFilter from './Components/CatFilter'
 import Shoe from './Components/Shoe'
+import Orders from './Components.Orders'
 //can we refactor these?
 
 class App extends Component{
@@ -28,6 +29,7 @@ class App extends Component{
           <Route exact path='/' component={Home}/> 
           <Route exact path='/add' component={AddShoe}/>
           <Route path='/product/:id' component={Shoe} />
+          <Route path='/users/:id/orders' component={Orders} />
         </Switch>
       </HashRouter>
     )

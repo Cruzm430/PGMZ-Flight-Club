@@ -6,17 +6,19 @@ import {actions} from '../store'
 class Welcome extends React.Component {
     constructor() {
         super();
-    this.onClick = this.onClick.bind(this)
+    this.logOut = this.logOut.bind(this)
     }
-    onClick() {
+    logOut() {
         this.props.logout()
     }
     render (){
-        const { onClick } = this
+        const { logOut } = this;
+        const { user } = this.props;
         return (
             <div>
-                <div>Welcome {this.props.user.name}</div>
-                <button onClick={onClick}>Log Out</button>
+                <div>Welcome {user.name}</div>
+                <Link to={`/users/${user.id}/orders`}>View Order History</Link>
+                <button onClick={logOut}>Log Out</button>
             </div>
         )
     }
