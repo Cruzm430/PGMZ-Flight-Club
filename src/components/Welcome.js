@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import {actions} from '../store' 
 
 
-class Welcome extends React.Component {
+class Welcome extends React.Component{
     constructor() {
         super();
     this.onClick = this.onClick.bind(this)
@@ -11,11 +11,16 @@ class Welcome extends React.Component {
     onClick() {
         this.props.logout()
     }
+    createShoe() {
+        
+    }
     render (){
-        const { onClick } = this
+        const { onClick, createShoe } = this
         return (
             <div>
                 <div>Welcome {this.props.user.name}</div>
+                {/* <div>{(this.props.user.admin === true) ?  : ""}</div> */}
+                {console.log(this.props.user.admin)}
                 <button onClick={onClick}>Log Out</button>
             </div>
         )

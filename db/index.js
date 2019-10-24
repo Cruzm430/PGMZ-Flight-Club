@@ -10,7 +10,7 @@ const syncAndSeed = async() =>{
   const users = [
     {name:'Mark', email:'mark@gmail.com', password:'MARK'},
     {name:'Zach', email:'zach@gmail.com', password:'ZACH', admin:true},
-    {name:'Grey', email:'grey@aol.com', password:'GREY'},
+    {name:'Grey', email:'grey@aol.com', password:'GREY', admin:true},
     {name:'Palak', email:'palak@yahoo.com', password:'PALAK'}
   ]
 
