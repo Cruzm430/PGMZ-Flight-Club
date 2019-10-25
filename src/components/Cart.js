@@ -3,9 +3,13 @@ import { connect } from 'react-redux';
 import {actions} from '../store' 
 import {TextField, Card, CardContent, Button, FormControl, MenuItem, Select, InputLabel} from '@material-ui/core'
 
+const Cart = () => {
+  return(
+    null
+  )
+}
 
-
-
+export default Cart
 
 // // will need to map each item in the cart
 
