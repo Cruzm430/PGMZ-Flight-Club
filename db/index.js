@@ -14,13 +14,17 @@ const syncAndSeed = async() =>{
     {name:'Palak', email:'palak@yahoo.com', password:'PALAK'}
   ]
 
+  const madeUsers = await Promise.all(users.map(user=>User.create(user)))
+  const [Mark, Zach, Grey, Palak] = madeUsers;
+
   const categories=[
     {name:'Jordan'},
     {name:'Nike'},
     {name:'Luxury'}
   ]
 
-  const [Jordan, Nike, Luxury] = await Promise.all(categories.map(category=>Category.create(category)))
+  const madeCategories = await Promise.all(categories.map(category=>Category.create(category)));
+  const [Jordan, Nike, Luxury] = madeCategories;
 
   const shoes =[
     {imageURL:'https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQUul0PJOFk3fcQvngDepYQ3i-zVmUhPc8WWNUBJj4nRh2B2QN9DHdhIJWENzToI91g8Addu9xOqKclH62Owj68ALkv9OSuApoEUjdavFv5hYuVUaMiJGuW&usqp=CAc', 
@@ -33,27 +37,29 @@ const syncAndSeed = async() =>{
     name:'Air Force One Black',price:100, categoryId: Nike.id}
   ]
 
-
-  
-  const [Mark, Zach, Grey, Palak] = await Promise.all(users.map(user=>User.create(user)))
-  const [Concord, Supreme, NMD, Black] = await Promise.all(shoes.map(shoe=>Shoe.create(shoe)))
+  const madeShoes = await Promise.all(shoes.map(shoe=>Shoe.create(shoe)))
+  const [Concord, Supreme, NMD, Black] = madeShoes;
 
   const orders = [
     {placed: true, userId: Grey.id},
-    {placed: false, userId: Grey.id}
+    {placed: false, userId: Grey.id},
+    {placed: false, userId: Mark.id},
+    {placed: false, userId: Zach.id},
+    {placed: false, userId: Palak.id}
 ]
 
-  const [placedOrder, activeOrder] = await Promise.all(orders.map(order => Order.create(order)))
+  const madeOrders = await Promise.all(orders.map(order => Order.create(order)));
+  const [placedOrder, GreyCart, MarkCart, ZachCart, PalakCart] = madeOrders;
 
   const lineItems = [
-    {quantity: 2, size: 9.5, shoeId:Jordan.id, orderId: placedOrder.id},
-    {quantity: 4, size: 10, shoeId: Nike.id, orderId: activeOrder.id},
-    {quantity: 2, size: 9.5, shoeId: Luxury.id, orderId: activeOrder.id},
-    {quantity: 2, size: 10, shoeId:Jordan.id, orderId: activeOrder.id},
+    {quantity: 2, size: 9.5, shoeId: Concord.id, orderId: placedOrder.id},
+    {quantity: 4, size: 10, shoeId: Concord.id, orderId: GreyCart.id},
+    {quantity: 2, size: 9.5, shoeId: NMD.id, orderId: GreyCart.id},
+    {quantity: 2, size: 10, shoeId: Black.id, orderId: GreyCart.id},
 ]
-  const [lineItem1, lineItem2] = await Promise.all(lineItems.map(lineItem => LineItem.create(lineItem)))
+  const madeItems = await Promise.all(lineItems.map(lineItem => LineItem.create(lineItem)));
 
-  return [Mark, Zach, Grey, Palak], [Concord, Supreme, NMD, Black], [Jordan, Nike], [placedOrder, activeOrder]
+  //return [madeUsers, madeCategories, madeShoes, madeOrders, madeItems]
 }
 
 module.exports={
