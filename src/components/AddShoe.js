@@ -32,7 +32,6 @@ class AddShoe extends Component{
       <div>
           <Card>
             <CardContent>
-
             <TextField
             label='Shoe Name'
             name='name'

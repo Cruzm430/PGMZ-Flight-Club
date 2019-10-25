@@ -6,13 +6,13 @@ import Typography from '@material-ui/core/Typography'
 import { connect } from 'react-redux';
 import Login from './Login'
 import Welcome from './Welcome'
+import AddShoe from './AddShoe'
 
 
 const Header = ({shoes, user})=>{
     return(
       <div>
         <AppBar>
-        <Link to='/add'>Create</Link>
         <HashRouter>
           <Switch>
           {
@@ -21,6 +21,7 @@ const Header = ({shoes, user})=>{
           {
             !user && (<Route path='/' component= { Login } exact/>)
           }
+          
           </Switch>
         </HashRouter>
         </AppBar>
