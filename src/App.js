@@ -8,6 +8,7 @@ import AddShoe from './Components/AddShoe'
 import Search from './Components/Search'
 import CatFilter from './Components/CatFilter'
 import Shoe from './Components/Shoe'
+import Orders from './Components/Orders'
 import UpdateShoe from './Components/UpdateShoe';
 //can we refactor these?
 
@@ -28,6 +29,7 @@ class App extends Component{
         <Switch>
           <Route exact path='/' component={Home}/> 
           <Route exact path='/add' component={AddShoe}/>
+          <Route path='/users/:id/orders' component={Orders} />
           <Route exact path='/product/:id' component={Shoe} />
           <Route path='/product/:id/update' component={UpdateShoe}/>
         </Switch>

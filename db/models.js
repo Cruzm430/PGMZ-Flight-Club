@@ -1,7 +1,7 @@
 const conn = require('./conn');
 const jwt = require('jsonwebtoken')
 const {Sequelize} = conn;
-const {UUID, UUIDV4, STRING, DECIMAL, BOOLEAN} = Sequelize
+const {UUID, UUIDV4, STRING, DECIMAL, BOOLEAN, INTEGER} = Sequelize
 
 const User = conn.define('user',{
   id:{
@@ -73,11 +73,50 @@ const Category = conn.define('category',{
   }
 })
 
+const LineItem = conn.define('lineitem', {
+  id: {
+    type: UUID,
+    primaryKey: true,
+    defaultValue: UUIDV4
+  },
+  quantity: {
+    type: INTEGER,
+    defaultValue: 1
+  },
+  size: {
+    type: DECIMAL,
+    allowNull: false
+  }
+})
+
+const Order = conn.define('order', {
+  id: {
+    type: UUID,
+    primaryKey: true,
+    defaultValue: UUIDV4
+  },
+  placed: {
+    type: BOOLEAN,
+    defaultValue: false
+  }
+})
+
 Shoe.belongsTo(Category);
 Category.hasMany(Shoe);
 
-module.exports={
+Order.belongsTo(User);
+User.hasMany(Order);
+
+LineItem.belongsTo(Order);
+Order.hasMany(LineItem);
+
+LineItem.hasOne(Shoe);
+Shoe.belongsTo(LineItem);
+
+module.exports = {
   User,
   Shoe,
-  Category
+  Category,
+  LineItem,
+  Order
 }
