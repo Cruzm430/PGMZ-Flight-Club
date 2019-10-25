@@ -5,7 +5,7 @@ const auth = require('./middleware/auth') //USE THIS FOR ROUTES THAT REQUIRE AUT
 const path = require('path');
 const db = require('./db/index');
 const jwt = require('jsonwebtoken')
-const { User, Shoe, Category } = db.models;
+const { User, Shoe, Category, Order, LineItem } = db.models;
 const Sequelize = require('sequelize');
 const { Op } = Sequelize;
 const bodyParser = require('body-parser')
@@ -106,6 +106,34 @@ app.get('/categories', (req,res,next)=>{
   Category.findAll()
   .then(categories=>res.send(categories))
   .catch(next)
+})
+
+app.post('/api/orders', (req, res, next) => {
+  Order.create(req.body)
+    .then(order => res.send(order))
+    .then(() => res.status(201))
+    .catch(next);
+})
+
+app.put('/api/orders/:id', (req, res, next) => {
+  Order.findByPk(req.params.id)
+    .then(order => order.update(req.body))
+    .then(order => res.send(order))
+    .catch(next)
+})
+
+app.post('/api/lineitems', (req, res, next) => {
+  LineItem.create(req.body)
+    .then(lineitem => res.send(lineitem))
+    .then(() => res.status(201))
+    .catch(next)
+})
+
+app.put('/api/lineitems', (req, res, next) => {
+  LineItem.findByPk(req.params.id)
+    .then(lineitem => lineitem(req.body))
+    .then(lineitem => res.send(lineitem))
+    .catch(next)
 })
 
 // app.get('/cart/:id', async (req,res,next)=>{
