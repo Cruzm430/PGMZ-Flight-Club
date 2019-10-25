@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {actions} from '../store' 
-
+import AddShoe from './AddShoe'
 
 class Welcome extends React.Component{
     constructor() {
@@ -19,7 +19,7 @@ class Welcome extends React.Component{
         return (
             <div>
                 <div>Welcome {this.props.user.name}</div>
-                {/* <div>{(this.props.user.admin === true) ?  : ""}</div> */}
+                {/* <div>{(this.props.user.admin === true) ? <AddShoe/> : ""}</div> */}
                 {console.log(this.props.user.admin)}
                 <button onClick={onClick}>Log Out</button>
             </div>

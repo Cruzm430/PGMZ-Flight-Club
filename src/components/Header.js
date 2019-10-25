@@ -12,9 +12,7 @@ import AddShoe from './AddShoe'
 const Header = ({shoes, user})=>{
     return(
       <div>
-          {console.log(user)}
         <AppBar>
-        
         <HashRouter>
           <Switch>
           {
@@ -23,6 +21,7 @@ const Header = ({shoes, user})=>{
           {
             !user && (<Route path='/' component= { Login } exact/>)
           }
+          
           </Switch>
         </HashRouter>
         </AppBar>
