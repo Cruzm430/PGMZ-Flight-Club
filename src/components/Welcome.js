@@ -2,26 +2,25 @@ import React from 'react';
 import { connect } from 'react-redux';
 import {actions} from '../store' 
 import AddShoe from './AddShoe'
+import { Link } from 'react-router-dom';
 
 class Welcome extends React.Component{
     constructor() {
         super();
-    this.onClick = this.onClick.bind(this)
+    this.logOut = this.logOut.bind(this)
     }
-    onClick() {
+    logOut() {
         this.props.logout()
     }
-    createShoe() {
-        
-    }
     render (){
-        const { onClick, createShoe } = this
+        const { logOut, addShoe } = this;
+        const { user } = this.props;
         return (
             <div>
-                <div>Welcome {this.props.user.name}</div>
+                <div>Welcome {user.name}</div>
+                <Link to={`/users/${user.id}/orders`}>View Order History</Link>
                 {/* <div>{(this.props.user.admin === true) ? <AddShoe/> : ""}</div> */}
-                {console.log(this.props.user.admin)}
-                <button onClick={onClick}>Log Out</button>
+                <button onClick={logOut}>Log Out</button>
             </div>
         )
     }

@@ -23,7 +23,6 @@ class CatFilter extends Component {
         <option key={DUMMY_KEY} value={DUMMY_KEY}>All Shoes</option>
         {categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)}
       </select>
-
     )
   }
 }

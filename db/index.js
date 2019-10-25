@@ -1,6 +1,6 @@
 const conn = require('./conn');
 
-const {User, Shoe, Category} = require('./models')
+const {User, Shoe, Category, LineItem, Order} = require('./models')
 
 Shoe.belongsTo(Category)
 
@@ -33,12 +33,27 @@ const syncAndSeed = async() =>{
     name:'Air Force One Black',price:100, categoryId: Nike.id}
   ]
 
+
   
   const [Mark, Zach, Grey, Palak] = await Promise.all(users.map(user=>User.create(user)))
   const [Concord, Supreme, NMD, Black] = await Promise.all(shoes.map(shoe=>Shoe.create(shoe)))
-  
 
-  return [Mark, Zach, Grey, Palak], [Concord, Supreme, NMD, Black], [Jordan, Nike]
+  const orders = [
+    {placed: true, userId: Grey.id},
+    {placed: false, userId: Grey.id}
+]
+
+  const [placedOrder, activeOrder] = await Promise.all(orders.map(order => Order.create(order)))
+
+  const lineItems = [
+    {quantity: 2, size: 9.5, shoeId:Jordan.id, orderId: placedOrder.id},
+    {quantity: 4, size: 10, shoeId: Nike.id, orderId: activeOrder.id},
+    {quantity: 2, size: 9.5, shoeId: Luxury.id, orderId: activeOrder.id},
+    {quantity: 2, size: 10, shoeId:Jordan.id, orderId: activeOrder.id},
+]
+  const [lineItem1, lineItem2] = await Promise.all(lineItems.map(lineItem => LineItem.create(lineItem)))
+
+  return [Mark, Zach, Grey, Palak], [Concord, Supreme, NMD, Black], [Jordan, Nike], [placedOrder, activeOrder]
 }
 
 module.exports={
@@ -46,6 +61,8 @@ module.exports={
   models:{
     User,
     Shoe,
-    Category
+    Category,
+    Order,
+    LineItem
   }
 }
