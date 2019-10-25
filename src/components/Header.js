@@ -1,35 +1,39 @@
 import React from 'react';
 import {Link, HashRouter, Route, Switch  } from 'react-router-dom';
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/ToolBar'
-import Typography from '@material-ui/core/Typography'
+import {AppBar, Toolbar, Typography, Button} from '@material-ui/core'
 import { connect } from 'react-redux';
 import Login from './Login'
 import Welcome from './Welcome'
 import AddShoe from './AddShoe'
+import Cart from './Cart'
 
 
 const Header = ({shoes, user})=>{
+  let isAdmin 
+  let _user
+  if(_user){
+    _user = user
+    isAdmin = user.admin
+    console.log(isAdmin)
+  }
     return(
       <div>
-        <AppBar>
+        <AppBar position='static'>
+          <Toolbar variant='dense'>
+          {
+            isAdmin ? <Link to='/add'><Typography>Create</Typography></Link> : ''
+          }
+          <Link to='/cart'><Typography>Cart</Typography></Link>
         <HashRouter>
-          <Switch>
-          {
-            user && (<Route path='/' component= { Welcome } exact/>)
-          }
-          {
-            !user && (<Route path='/' component= { Login } exact/>)
-          }
-          
-          </Switch>
+            {
+              user ? <Route path='/' component={Welcome}/> : <Route path='/' component={Login}/>
+            }
         </HashRouter>
+          </Toolbar>
         </AppBar>
       </div>
     )
   }
-  
-  
 
 const mapStateToProps = ({shoes, user}) =>{
   return{

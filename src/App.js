@@ -3,13 +3,14 @@ import {HashRouter, Switch, Route, Redirect} from 'react-router-dom';
 import {actions} from './store';
 import {connect} from 'react-redux';
 import Home from './Components/Home';
-import Header from './Components/Header'
-import AddShoe from './Components/AddShoe'
-import Search from './Components/Search'
-import CatFilter from './Components/CatFilter'
-import Shoe from './Components/Shoe'
-import Orders from './Components/Orders'
+import Header from './Components/Header';
+import AddShoe from './Components/AddShoe';
+import Search from './Components/Search';
+import CatFilter from './Components/CatFilter';
+import Shoe from './Components/Shoe';
+import Orders from './Components/Orders';
 import UpdateShoe from './Components/UpdateShoe';
+import Cart from './Components/Cart';
 //can we refactor these?
 
 class App extends Component{
@@ -20,7 +21,6 @@ class App extends Component{
     .catch(ex => console.log(ex));
   }
   render(){
-    // console.log(this.props);
     return (
       <HashRouter>
         <Route component={Header}/>
@@ -29,6 +29,7 @@ class App extends Component{
         <Switch>
           <Route exact path='/' component={Home}/> 
           <Route exact path='/add' component={AddShoe}/>
+          <Route path='/cart' component={Cart}/>
           <Route path='/users/:id/orders' component={Orders} />
           <Route exact path='/product/:id' component={Shoe} />
           <Route path='/product/:id/update' component={UpdateShoe}/>
@@ -38,11 +39,12 @@ class App extends Component{
   }
 }
 
-const mapStateToProps = ({ users, shoes, categories})=>{
+const mapStateToProps = ({ users, shoes, categories}, props)=>{
   return{
     users,
     shoes, 
-    categories
+    categories,
+    props
   }
 }
 

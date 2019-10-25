@@ -25,12 +25,15 @@ class Login extends React.Component{
     }
     render(){
         const { onChange, onSubmit } = this
-        return (     
+        return ( 
+          <div>
+            <p>Login</p>
             <form>
                 <input type="text" onChange={onChange} name="email" />
                 <input type="text" onChange={onChange} name="password" />
                 <button onClick={onSubmit} value="Login">Log In</button>
             </form> 
+          </div>    
         )
     }  
   }

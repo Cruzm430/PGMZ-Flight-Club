@@ -87,23 +87,3 @@ const mapDispatchToProps = (dispatch) =>{
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddShoe)
-
-{/* <div>
-        <label> Image URL
-          <input name='imageURL' onChange={onChange} value={imageURL}/>
-        </label>
-        <label> Name
-          <input name='name' onChange={onChange} value={name}/>
-        </label>
-        <label> Price
-          <input name='price' onChange={onChange} value={price}/>
-        </label>
-        <label>Category
-          <select onChange={onChange} name='categoryId'>
-            {
-              this.props.categories.map(category =><option key={category.id} value={category.id}>{category.name}</option>)
-            }
-          </select>
-        </label>
-        <button onClick={onSubmit}>Create Shoe</button>
-      </div> */}
