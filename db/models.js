@@ -102,8 +102,7 @@ User.hasMany(Order);
 LineItem.belongsTo(Order);
 Order.hasMany(LineItem);
 
-LineItem.hasOne(Shoe);
-Shoe.belongsTo(LineItem);
+LineItem.belongsTo(Shoe);
 
 module.exports = {
   User,

@@ -11,11 +11,11 @@ const Cart = () => {
 
 export default Cart
 
-// will need to map each item in the cart
+// // will need to map each item in the cart
 
-//will need to display the infromation about the cart and information about the line item
+// //will need to display the infromation about the cart and information about the line item
 
-//will need an increment and a decrement function for each item'
+// //will need an increment and a decrement function for each item'
 
 // onDecrement() {
 
@@ -25,7 +25,7 @@ export default Cart
 
 // }
 
-//will need a checkout button and should be disabled if the user is not logged in
+// //will need a checkout button and should be disabled if the user is not logged in
 
 // onclick() {
 

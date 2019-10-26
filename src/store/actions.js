@@ -1,10 +1,11 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH, DELETE_SHOE, UPDATE_SHOE} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_ORDERS, CREATE_SHOE, DUMMY_KEY, SET_AUTH,
+  DELETE_SHOE, UPDATE_SHOE, CREATE_LINE_ITEM, UPDATE_LINE_ITEM} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
   return {
     users,
-    type:SET_USERS
+    type: SET_USERS
   }
 }
 
@@ -52,6 +53,34 @@ const _login = (user) => {
         user,
         type: SET_AUTH
     }
+}
+
+const setLineItems = (lineItems) => {
+  return {
+    lineItems,
+    type: SET_LINE_ITEMS
+  }
+}
+
+const _createLineItem = (lineItem) => {
+  return {
+    lineItem,
+    type: CREATE_LINE_ITEM
+  }
+}
+
+const _updateLineItem = (lineItem) => {
+  return {
+    lineItem,
+    type: UPDATE_LINE_ITEM
+  }
+}
+
+const setOrders = (orders) => {
+  return {
+    orders,
+    type: SET_ORDERS
+  }
 }
 
 const getShoes = () =>{
@@ -137,7 +166,35 @@ const updateShoe = (shoe, update) => {
   }
 }
 
-export{
+const getLineItems = () => {
+  return async (dispatch) => {
+    const lineItems = (await axios.get('/api/lineitems')).data
+    return dispatch(setLineItems(lineItems));
+  }
+}
+
+const createLineItem = (lineItem) => {
+  return async (dispatch)=>{
+    const created = (await axios.post('/api/lineitems', lineItem)).data
+    return dispatch(_createLineItem(created))
+  }
+}
+
+const updateLineItem = (lineItem, update) => {
+  return async(dispatch)=> {
+    const newItem = (await axios.put(`/api/lineitems/${lineItem.id}`, update)).data
+    return dispatch(_updateLineItem(newItem))
+  }
+}
+
+const getOrders = () => {
+  return async (dispatch) => {
+    const orders = (await axios.get('/api/orders')).data
+    return dispatch(setOrders(orders));
+  }
+}
+
+export {
   getUsers,
   getShoes,
   getCategories,
@@ -150,5 +207,9 @@ export{
   searchByCat,
   createShoe,
   deleteShoe,
-  updateShoe
+  updateShoe,
+  getLineItems,
+  createLineItem,
+  updateLineItem,
+  getOrders
 }
