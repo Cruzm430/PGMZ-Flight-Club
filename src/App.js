@@ -19,6 +19,7 @@ class App extends Component{
     this.props.getCategories()
     this.props.attemptSessionLogin()
     this.props.getOrders()
+    this.props.getLineItems()
     .catch(ex => console.log(ex));
   }
   render(){
@@ -40,12 +41,13 @@ class App extends Component{
   }
 }
 
-const mapStateToProps = ({ users, shoes, categories, orders}, props)=>{
+const mapStateToProps = ({ users, shoes, categories, orders, lineItems }, props)=>{
   return{
     users,
-    shoes, 
+    shoes,
     categories,
     orders,
+    lineItems,
     props
   }
 }
@@ -56,6 +58,7 @@ const mapDispatchToProps = (dispatch) => {
     getShoes: () => dispatch(actions.getShoes()),
     getCategories: () => dispatch(actions.getCategories()),
     getOrders: () => dispatch(actions.getOrders()),
+    getLineItems: () => dispatch(actions.getLineItems()),
     attemptSessionLogin: () => dispatch(actions.attemptSessionLogin())
   }
 }

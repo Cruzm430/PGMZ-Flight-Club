@@ -1,5 +1,5 @@
 import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_ORDERS, CREATE_SHOE, DUMMY_KEY, SET_AUTH,
-  DELETE_SHOE, UPDATE_SHOE, CREATE_LINE_ITEM, UPDATE_LINE_ITEM} from './constants';
+  DELETE_SHOE, UPDATE_SHOE, CREATE_LINE_ITEM, UPDATE_LINE_ITEM, SET_LINE_ITEMS} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {

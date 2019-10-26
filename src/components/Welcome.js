@@ -22,6 +22,7 @@ class Welcome extends React.Component{
                 <Link to={`/users/${user.id}/orders`}>View Order History</Link>
                 {/* <div>{(this.props.user.admin === true) ? <AddShoe/> : ""}</div> */}
                 <button onClick={logOut}>Log Out</button>
+                <Link to={'/checkout'}>Check Out</Link>
             </div>
         )
     }
