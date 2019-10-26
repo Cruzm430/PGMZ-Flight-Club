@@ -15,6 +15,7 @@ class Welcome extends React.Component{
     render (){
         const { logOut, addShoe } = this;
         const { user } = this.props;
+        const { onClick } = this
         return (
             <div>
                 <div>Welcome {user.name}</div>
@@ -32,7 +33,7 @@ const mapStateToProps = ({user}, props) =>{
         user,
         props
     }
-  }
+}
   
   const mapDispatchToProps = (dispatch) =>{
     return{

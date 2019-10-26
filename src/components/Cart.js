@@ -36,7 +36,7 @@ class Cart extends Component {
             <div>
                 { 
                     cart.map(lineItem => {
-                        return (<li> 
+                        return (<li key={lineItem.id}> 
                             <div>{lineItem.name} {lineItem.size} {lineItem.quantity}</div>
                             </li>
                         )

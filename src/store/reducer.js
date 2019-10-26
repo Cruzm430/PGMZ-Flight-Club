@@ -1,6 +1,7 @@
 /* eslint-disable default-case */
 import {combineReducers} from 'redux';
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, SET_AUTH, DELETE_SHOE, UPDATE_SHOE, SET_CART} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_ORDERS, CREATE_SHOE, SET_AUTH, DELETE_SHOE, UPDATE_SHOE, SET_CART,
+        SET_LINE_ITEMS, CREATE_LINE_ITEM, UPDATE_LINE_ITEM} from './constants';
 
 const shoesReducer = (state = [], action)=>{
   switch (action.type) {
@@ -39,10 +40,34 @@ const cartReducer = (state = [], action) => {
         return state
 }
 
+const lineItemsReducer = (state = [], action) => {
+  switch (action.type) {
+    case SET_LINE_ITEMS:
+      return action.lineItems;
+    case CREATE_LINE_ITEM:
+      return [...state, action.lineItem];
+    case UPDATE_LINE_ITEM:
+      return state.map(lineItem => {
+        return lineItem.id === action.lineItem.id ? action.lineItem : lineItem
+      });
+  }
+  return state;
+}
+
+const ordersReducer = (state = [], action) => {
+  switch (action.type) {
+    case SET_ORDERS:
+      return action.orders;
+  }
+  return state;
+}
+
 const reducer = combineReducers({
-  shoes:shoesReducer,
-  user:authReducer,
-  categories:categoriesReducer,
+  shoes: shoesReducer,
+  user: authReducer,
+  categories: categoriesReducer,
+  lineItems: lineItemsReducer,
+  orders: ordersReducer,
   cart: cartReducer
 })
 

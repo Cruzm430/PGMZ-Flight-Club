@@ -3,14 +3,14 @@ import {HashRouter, Switch, Route, Redirect} from 'react-router-dom';
 import {actions} from './store';
 import {connect} from 'react-redux';
 import Home from './Components/Home';
-import Header from './Components/Header'
-import AddShoe from './Components/AddShoe'
-import Search from './Components/Search'
-import CatFilter from './Components/CatFilter'
-import Shoe from './Components/Shoe'
-import Orders from './Components/Orders'
+import Header from './Components/Header';
+import AddShoe from './Components/AddShoe';
+import Search from './Components/Search';
+import CatFilter from './Components/CatFilter';
+import Shoe from './Components/Shoe';
+import Orders from './Components/Orders';
 import UpdateShoe from './Components/UpdateShoe';
-import Cart from './Components/Cart'
+import Cart from './Components/Cart';
 //can we refactor these?
 
 class App extends Component{
@@ -18,10 +18,10 @@ class App extends Component{
     this.props.getShoes()
     this.props.getCategories()
     this.props.attemptSessionLogin()
+    this.props.getOrders()
     .catch(ex => console.log(ex));
   }
   render(){
-    // console.log(this.props);
     return (
       <HashRouter>
         <Route component={Header}/>
@@ -40,11 +40,13 @@ class App extends Component{
   }
 }
 
-const mapStateToProps = ({ users, shoes, categories})=>{
+const mapStateToProps = ({ users, shoes, categories, orders}, props)=>{
   return{
     users,
     shoes, 
-    categories
+    categories,
+    orders,
+    props
   }
 }
 
@@ -53,6 +55,7 @@ const mapDispatchToProps = (dispatch) => {
     getUsers: () => dispatch(actions.getUsers()),
     getShoes: () => dispatch(actions.getShoes()),
     getCategories: () => dispatch(actions.getCategories()),
+    getOrders: () => dispatch(actions.getOrders()),
     attemptSessionLogin: () => dispatch(actions.attemptSessionLogin())
   }
 }

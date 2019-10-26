@@ -5,7 +5,7 @@ const auth = require('./middleware/auth') //USE THIS FOR ROUTES THAT REQUIRE AUT
 const path = require('path');
 const db = require('./db/index');
 const jwt = require('jsonwebtoken')
-const { User, Shoe, Category, Order, LineItem} = db.models;
+const { User, Shoe, Category, Order, LineItem } = db.models;
 const Sequelize = require('sequelize');
 const { Op } = Sequelize;
 const bodyParser = require('body-parser')
@@ -137,3 +137,79 @@ app.post('/api/cart/:id', async (req,res,next)=> {
     .catch(next)
   }
 })
+app.post('/api/orders', (req, res, next) => {
+  Order.create(req.body)
+    .then(order => res.send(order))
+    .then(() => res.status(201))
+    .catch(next);
+})
+
+app.put('/api/orders/:id', (req, res, next) => {
+  Order.findByPk(req.params.id)
+    .then(order => order.update(req.body))
+    .then(order => res.send(order))
+    .catch(next)
+})
+
+app.get('/api/lineitems', (req, res, next) => {
+  LineItem.findAll()
+    .then(lineitems => res.send(lineitems))
+    .catch(next);
+})
+
+app.post('/api/lineitems', (req, res, next) => {
+  LineItem.create(req.body)
+    .then(lineitem => res.send(lineitem))
+    .then(() => res.status(201))
+    .catch(next)
+})
+
+app.put('/api/lineitems/:id', (req, res, next) => {
+  LineItem.findByPk(req.params.id)
+    .then(lineitem => lineitem.update(req.body))
+    .then(lineitem => res.send(lineitem))
+    .catch(next)
+})
+
+app.get('/api/orders', (req, res, next) => {
+  Order.findAll()
+    .then(orders => res.send(orders))
+    .catch(next);
+})
+
+// app.get('/api/orders/:id', (req, res, next) => {
+//   Order.findAll({
+//     where: {
+//       userId: req.params.id
+//     }
+//   })
+//     .then(orders => res.send(orders))
+//     .catch(next)
+// })
+
+// app.get('/cart/:id', async (req,res,next)=>{
+//   const order = await Order.findOne({where:{userId: req.params.id}})
+//   if(order){
+//     return res.status(200).send(order)
+//   }
+//   else{
+//     res.status(400).send('no cart yet')
+//   }
+// })
+
+// app.post('/api/cart/:id', async (req,res,next)=> {
+//   const order = await Order.findOne({where:{userId:req.params.id}})
+//   if(order){
+//     LineItem.create(req.body)
+//     .then(newLine => res.send(newLine))
+//     .then(()=> res.sendStatus(201))
+//     .catch(next)
+//   }
+//   else{
+//     Order.create(req.params)
+//     .then(LineItem.create(req.body))
+//     .then(newLine => res.send(newLine))
+//     .then(()=>res.sendStatus(201))
+//     .catch(next)
+//   }
+// })
