@@ -122,6 +122,12 @@ app.put('/api/orders/:id', (req, res, next) => {
     .catch(next)
 })
 
+app.get('/api/lineitems', (req, res, next) => {
+  LineItem.findAll()
+    .then(lineitems => res.send(lineitems))
+    .catch(next);
+})
+
 app.post('/api/lineitems', (req, res, next) => {
   LineItem.create(req.body)
     .then(lineitem => res.send(lineitem))
@@ -129,12 +135,28 @@ app.post('/api/lineitems', (req, res, next) => {
     .catch(next)
 })
 
-app.put('/api/lineitems', (req, res, next) => {
+app.put('/api/lineitems/:id', (req, res, next) => {
   LineItem.findByPk(req.params.id)
-    .then(lineitem => lineitem(req.body))
+    .then(lineitem => lineitem.update(req.body))
     .then(lineitem => res.send(lineitem))
     .catch(next)
 })
+
+app.get('/api/orders', (req, res, next) => {
+  Order.findAll()
+    .then(orders => res.send(orders))
+    .catch(next);
+})
+
+// app.get('/api/orders/:id', (req, res, next) => {
+//   Order.findAll({
+//     where: {
+//       userId: req.params.id
+//     }
+//   })
+//     .then(orders => res.send(orders))
+//     .catch(next)
+// })
 
 // app.get('/cart/:id', async (req,res,next)=>{
 //   const order = await Order.findOne({where:{userId: req.params.id}})

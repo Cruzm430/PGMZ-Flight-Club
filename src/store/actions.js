@@ -1,11 +1,11 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH,
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_ORDERS, CREATE_SHOE, DUMMY_KEY, SET_AUTH,
   DELETE_SHOE, UPDATE_SHOE, CREATE_LINE_ITEM, UPDATE_LINE_ITEM} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
   return {
     users,
-    type:SET_USERS
+    type: SET_USERS
   }
 }
 
@@ -55,6 +55,13 @@ const _login = (user) => {
     }
 }
 
+const setLineItems = (lineItems) => {
+  return {
+    lineItems,
+    type: SET_LINE_ITEMS
+  }
+}
+
 const _createLineItem = (lineItem) => {
   return {
     lineItem,
@@ -66,6 +73,13 @@ const _updateLineItem = (lineItem) => {
   return {
     lineItem,
     type: UPDATE_LINE_ITEM
+  }
+}
+
+const setOrders = (orders) => {
+  return {
+    orders,
+    type: SET_ORDERS
   }
 }
 
@@ -152,6 +166,13 @@ const updateShoe = (shoe, update) => {
   }
 }
 
+const getLineItems = () => {
+  return async (dispatch) => {
+    const lineItems = (await axios.get('/api/lineitems')).data
+    return dispatch(setLineItems(lineItems));
+  }
+}
+
 const createLineItem = (lineItem) => {
   return async (dispatch)=>{
     const created = (await axios.post('/api/lineitems', lineItem)).data
@@ -161,8 +182,15 @@ const createLineItem = (lineItem) => {
 
 const updateLineItem = (lineItem, update) => {
   return async(dispatch)=> {
-    await axios.put(`/api/lineitems/${lineItem.id}`, update)
-    return dispatch(_updateLineItem(update))
+    const newItem = (await axios.put(`/api/lineitems/${lineItem.id}`, update)).data
+    return dispatch(_updateLineItem(newItem))
+  }
+}
+
+const getOrders = () => {
+  return async (dispatch) => {
+    const orders = (await axios.get('/api/orders')).data
+    return dispatch(setOrders(orders));
   }
 }
 
@@ -180,6 +208,8 @@ export {
   createShoe,
   deleteShoe,
   updateShoe,
+  getLineItems,
   createLineItem,
-  updateLineItem
+  updateLineItem,
+  getOrders
 }
