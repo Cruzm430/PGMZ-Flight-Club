@@ -5,7 +5,7 @@ const auth = require('./middleware/auth') //USE THIS FOR ROUTES THAT REQUIRE AUT
 const path = require('path');
 const db = require('./db/index');
 const jwt = require('jsonwebtoken')
-const { User, Shoe, Category } = db.models;
+const { User, Shoe, Category, Order, LineItem} = db.models;
 const Sequelize = require('sequelize');
 const { Op } = Sequelize;
 const bodyParser = require('body-parser')
@@ -108,29 +108,32 @@ app.get('/categories', (req,res,next)=>{
   .catch(next)
 })
 
-// app.get('/cart/:id', async (req,res,next)=>{
-//   const order = await Order.findOne({where:{userId: req.params.id}})
-//   if(order){
-//     return res.status(200).send(order)
-//   }
-//   else{
-//     res.status(400).send('no cart yet')
-//   }
-// })
+app.get('/cart/:id', async (req,res,next)=>{
+  const order = await Order.findOne({where:{
+      userId: req.params.id, 
+      placed: true}})
+  if(order){
+    const cart = await LineItem.findAll({where:{orderId: order.dataValues.id}})
+    return res.status(200).send(cart)
+  }
+  else{
+    res.status(400).send('no cart yet')
+  } 
+})
 
-// app.post('/api/cart/:id', async (req,res,next)=> {
-//   const order = await Order.findOne({where:{userId:req.params.id}})
-//   if(order){
-//     LineItem.create(req.body)
-//     .then(newLine => res.send(newLine))
-//     .then(()=> res.sendStatus(201))
-//     .catch(next)
-//   }
-//   else{
-//     Order.create(req.params)
-//     .then(LineItem.create(req.body))
-//     .then(newLine => res.send(newLine))
-//     .then(()=>res.sendStatus(201))
-//     .catch(next)
-//   }
-// })
+app.post('/api/cart/:id', async (req,res,next)=> {
+  const order = await Order.findOne({where:{userId:req.params.id}})
+  if(order){
+    LineItem.create(req.body)
+    .then(newLine => res.send(newLine))
+    .then(()=> res.sendStatus(201))
+    .catch(next)
+  }
+  else{
+    Order.create(req.params)
+    .then(LineItem.create(req.body))
+    .then(newLine => res.send(newLine))
+    .then(()=>res.sendStatus(201))
+    .catch(next)
+  }
+})

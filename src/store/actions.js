@@ -1,4 +1,4 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH, DELETE_SHOE, UPDATE_SHOE} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH, DELETE_SHOE, UPDATE_SHOE,SET_CART} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -51,6 +51,13 @@ const _login = (user) => {
     return{
         user,
         type: SET_AUTH
+    }
+}
+
+const _updateCart = (cart) => {
+    return{
+        cart,
+        type: SET_CART
     }
 }
 
@@ -137,6 +144,16 @@ const updateShoe = (shoe, update) => {
   }
 }
 
+const updateCart = (user) => {
+    // console.log('testing save')
+    // console.log('user to updatecart: ', user.id)
+    return async(dispatch) => {
+        const cart = (await axios.get(`/cart/${user.id}`)).data
+        console.log('cart', cart)
+        return dispatch(_updateCart(cart))
+    }
+ }
+
 export{
   getUsers,
   getShoes,
@@ -148,7 +165,7 @@ export{
   attemptLogin,
   searchByName,
   searchByCat,
-  createShoe,
+  updateCart,
   deleteShoe,
   updateShoe
 }

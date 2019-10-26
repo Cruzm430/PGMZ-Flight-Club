@@ -6,6 +6,7 @@ const CREATE_SHOE = 'CREATE_SHOE'
 const DELETE_SHOE = 'DELETE_SHOE'
 const UPDATE_SHOE = 'UPDATE_SHOE'
 const DUMMY_KEY = 'abc'
+const SET_CART = 'SET_CART'
 
 export {
   SET_USERS,
@@ -15,5 +16,6 @@ export {
   CREATE_SHOE,
   DELETE_SHOE,
   UPDATE_SHOE,
-  DUMMY_KEY
+  DUMMY_KEY,
+  SET_CART
 }

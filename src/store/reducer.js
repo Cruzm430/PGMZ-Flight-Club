@@ -1,6 +1,6 @@
 /* eslint-disable default-case */
 import {combineReducers} from 'redux';
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, SET_AUTH, DELETE_SHOE, UPDATE_SHOE} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, SET_AUTH, DELETE_SHOE, UPDATE_SHOE, SET_CART} from './constants';
 
 const shoesReducer = (state = [], action)=>{
   switch (action.type) {
@@ -30,10 +30,20 @@ const authReducer = (state = '', action) => {
     return state
 }
 
+const cartReducer = (state = [], action) => {
+    console.log('cartReducer', action.cart)
+    switch(action.type){
+        case SET_CART:
+            return action.cart;
+        }
+        return state
+}
+
 const reducer = combineReducers({
   shoes:shoesReducer,
   user:authReducer,
-  categories:categoriesReducer
+  categories:categoriesReducer,
+  cart: cartReducer
 })
 
 export default reducer;

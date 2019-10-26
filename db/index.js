@@ -46,10 +46,10 @@ const syncAndSeed = async() =>{
   const [placedOrder, activeOrder] = await Promise.all(orders.map(order => Order.create(order)))
 
   const lineItems = [
-    {quantity: 2, size: 9.5, shoeId:Jordan.id, orderId: placedOrder.id},
-    {quantity: 4, size: 10, shoeId: Nike.id, orderId: activeOrder.id},
-    {quantity: 2, size: 9.5, shoeId: Luxury.id, orderId: activeOrder.id},
-    {quantity: 2, size: 10, shoeId:Jordan.id, orderId: activeOrder.id},
+    {quantity: 2, size: 9.5, shoeId: Concord.Id, orderId: placedOrder.id, name: Concord.name},
+    {quantity: 4, size: 10, shoeId: Supreme.id, orderId: placedOrder.id, name: Supreme.name},
+    {quantity: 2, size: 9.5, shoeId: NMD.id, orderId: placedOrder.id, name: NMD.name},
+    {quantity: 2, size: 10, shoeId:Supreme.id, orderId: activeOrder.id, name: Supreme.name},
 ]
   const [lineItem1, lineItem2] = await Promise.all(lineItems.map(lineItem => LineItem.create(lineItem)))
 

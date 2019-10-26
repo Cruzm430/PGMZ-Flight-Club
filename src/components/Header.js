@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Login from './Login'
 import Welcome from './Welcome'
 import AddShoe from './AddShoe'
-
+import Cart from './Cart'
 
 const Header = ({shoes, user})=>{
     return(
@@ -16,7 +16,7 @@ const Header = ({shoes, user})=>{
         <HashRouter>
           <Switch>
           {
-            user && (<Route path='/' component= { Welcome } exact/>)
+            user && (<Route path='/' component= { Welcome } />)
           }
           {
             !user && (<Route path='/' component= { Login } exact/>)
