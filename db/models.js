@@ -53,6 +53,7 @@ const Shoe = conn.define('shoe',{
   }
 })
 
+
 const Category = conn.define('category',{
   id:{
     type:UUID,

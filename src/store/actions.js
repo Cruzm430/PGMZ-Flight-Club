@@ -1,5 +1,5 @@
 import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_ORDERS, CREATE_SHOE, DUMMY_KEY, SET_AUTH,
-  DELETE_SHOE, UPDATE_SHOE, CREATE_LINE_ITEM, UPDATE_LINE_ITEM, SET_LINE_ITEMS} from './constants';
+  DELETE_SHOE, UPDATE_SHOE, CREATE_LINE_ITEM, UPDATE_LINE_ITEM, SET_LINE_ITEMS, SET_CART} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -55,6 +55,13 @@ const _login = (user) => {
     }
 }
 
+const _updateCart = (cart) => {
+    return{
+        cart,
+        type: SET_CART
+    }
+}
+
 const setLineItems = (lineItems) => {
   return {
     lineItems,
@@ -80,6 +87,20 @@ const setOrders = (orders) => {
   return {
     orders,
     type: SET_ORDERS
+  }
+}
+
+const _updateOrder = (order) => {
+  return {
+    order,
+    type: UPDATE_ORDER
+  }
+}
+
+const _createOrder = (order) => {
+  return {
+    order,
+    type: CREATE_ORDER
   }
 }
 
@@ -166,6 +187,16 @@ const updateShoe = (shoe, update) => {
   }
 }
 
+const updateCart = (user) => {
+    // console.log('testing save')
+    // console.log('user to updatecart: ', user.id)
+    return async(dispatch) => {
+        const cart = (await axios.get(`/cart/${user.id}`)).data
+        console.log('cart', cart)
+        return dispatch(_updateCart(cart))
+    }
+ }
+
 const getLineItems = () => {
   return async (dispatch) => {
     const lineItems = (await axios.get('/api/lineitems')).data
@@ -194,6 +225,20 @@ const getOrders = () => {
   }
 }
 
+const createOrder = (order) => {
+  return async (dispatch) => {
+    const created = (await axios.post('/api/orders')).data
+    return dispatch(_createOrder(created))
+  }
+}
+
+const updateOrder = (order, update) => {
+  return async (dispatch) => {
+    const newOrder = (await axios.put(`/api/orders/${order.id}`, update)).data
+    return dispatch(_updateOrder(order));
+  }
+}
+
 export {
   getUsers,
   getShoes,
@@ -205,11 +250,13 @@ export {
   attemptLogin,
   searchByName,
   searchByCat,
-  createShoe,
+  updateCart,
   deleteShoe,
   updateShoe,
   getLineItems,
   createLineItem,
   updateLineItem,
-  getOrders
+  getOrders,
+  createOrder,
+  updateOrder
 }

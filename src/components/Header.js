@@ -20,13 +20,12 @@ const Header = ({shoes, user})=>{
       <div>
         <AppBar position='static'>
           <Toolbar variant='dense'>
-          {
-            isAdmin ? <Link to='/add'><Typography>Create</Typography></Link> : ''
-          }
-          <Link to='/cart'><Typography>Cart</Typography></Link>
         <HashRouter>
             {
               user ? <Route path='/' component={Welcome}/> : <Route path='/' component={Login}/>
+            }
+            {
+            isAdmin ? <Link to='/add'><Typography>Create</Typography></Link> : ''
             }
         </HashRouter>
           </Toolbar>
