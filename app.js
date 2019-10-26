@@ -108,6 +108,35 @@ app.get('/categories', (req,res,next)=>{
   .catch(next)
 })
 
+app.get('/cart/:id', async (req,res,next)=>{
+  const order = await Order.findOne({where:{
+      userId: req.params.id, 
+      placed: true}})
+  if(order){
+    const cart = await LineItem.findAll({where:{orderId: order.dataValues.id}})
+    return res.status(200).send(cart)
+  }
+  else{
+    res.status(400).send('no cart yet')
+  } 
+})
+
+app.post('/api/cart/:id', async (req,res,next)=> {
+  const order = await Order.findOne({where:{userId:req.params.id}})
+  if(order){
+    LineItem.create(req.body)
+    .then(newLine => res.send(newLine))
+    .then(()=> res.sendStatus(201))
+    .catch(next)
+  }
+  else{
+    Order.create(req.params)
+    .then(LineItem.create(req.body))
+    .then(newLine => res.send(newLine))
+    .then(()=>res.sendStatus(201))
+    .catch(next)
+  }
+})
 app.post('/api/orders', (req, res, next) => {
   Order.create(req.body)
     .then(order => res.send(order))

@@ -53,6 +53,7 @@ const Shoe = conn.define('shoe',{
   }
 })
 
+
 const Category = conn.define('category',{
   id:{
     type:UUID,
@@ -78,6 +79,10 @@ const LineItem = conn.define('lineitem', {
   size: {
     type: DECIMAL,
     allowNull: false
+  },
+  name:{
+      type:STRING,
+      allowNull:false
   }
 })
 

@@ -2,31 +2,64 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {actions} from '../store' 
 import {TextField, Card, CardContent, Button, FormControl, MenuItem, Select, InputLabel} from '@material-ui/core'
+import axios from 'axios'
+// import { json } from 'sequelize/types';
+import { loadavg } from 'os';
 
-const Cart = () => {
-  return(
-    null
-  )
+class Cart extends Component {
+    constructor () {
+        super()
+        this.load = this.load.bind(this)
+    }
+    componentDidMount(){
+        // console.log('mounting',this.props)
+       if(this.props.user !== "") {
+           this.load()
+       }
+       
+    }
+    componentDidUpdate(prevProps){
+        if(JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
+            // console.log('updating')
+            this.load()
+        }
+    }
+    async load() {
+        // console.log('loading', this.props.user)
+        //will create an action in future
+        this.props.updateCart(this.props.user)
+        // console.log(this.props.cart)
+    }
+    render() {
+        const { cart } = this.props
+        return( 
+            <div>
+                { 
+                    cart.map(lineItem => {
+                        return (<li key={lineItem.id}> 
+                            <div>{lineItem.name} {lineItem.size} {lineItem.quantity}</div>
+                            </li>
+                        )
+                    })
+                }
+            </div>
+        )
+    }
+}
+  
+
+const mapStateToProps = ({user, cart}, props) =>{
+    return{
+        user,
+        cart,
+        props
+    }
 }
 
-export default Cart
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        updateCart: (user) => dispatch(actions.updateCart(user))
+    }
+  }
 
-// // will need to map each item in the cart
-
-// //will need to display the infromation about the cart and information about the line item
-
-// //will need an increment and a decrement function for each item'
-
-// onDecrement() {
-
-// }
-
-// onIncrement() {
-
-// }
-
-// //will need a checkout button and should be disabled if the user is not logged in
-
-// onclick() {
-
-// }
+export default connect(mapStateToProps, mapDispatchToProps)(Cart)

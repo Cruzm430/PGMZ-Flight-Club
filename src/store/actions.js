@@ -1,5 +1,4 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_ORDERS, CREATE_SHOE, DUMMY_KEY, SET_AUTH,
-  DELETE_SHOE, UPDATE_SHOE, CREATE_LINE_ITEM, UPDATE_LINE_ITEM} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH, DELETE_SHOE, UPDATE_SHOE,SET_CART, SET_ORDERS, CREATE_LINE_ITEM, UPDATE_LINE_ITEM} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -52,6 +51,13 @@ const _login = (user) => {
     return{
         user,
         type: SET_AUTH
+    }
+}
+
+const _updateCart = (cart) => {
+    return{
+        cart,
+        type: SET_CART
     }
 }
 
@@ -166,6 +172,16 @@ const updateShoe = (shoe, update) => {
   }
 }
 
+const updateCart = (user) => {
+    // console.log('testing save')
+    // console.log('user to updatecart: ', user.id)
+    return async(dispatch) => {
+        const cart = (await axios.get(`/cart/${user.id}`)).data
+        console.log('cart', cart)
+        return dispatch(_updateCart(cart))
+    }
+ }
+
 const getLineItems = () => {
   return async (dispatch) => {
     const lineItems = (await axios.get('/api/lineitems')).data
@@ -205,7 +221,7 @@ export {
   attemptLogin,
   searchByName,
   searchByCat,
-  createShoe,
+  updateCart,
   deleteShoe,
   updateShoe,
   getLineItems,
