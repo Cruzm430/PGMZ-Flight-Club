@@ -19,7 +19,7 @@ class Welcome extends React.Component{
         return (
             <div>
                 <div>Welcome {user.name}</div>
-                <Link to={`/users/${user.id}/orders`}>View Order History</Link>
+                <Link to={`/orders`}>View Order History</Link>
                 {/* <div>{(this.props.user.admin === true) ? <AddShoe/> : ""}</div> */}
                 <Link to={'/cart'}>Cart</Link>
                 <button onClick={logOut}>Log Out</button>

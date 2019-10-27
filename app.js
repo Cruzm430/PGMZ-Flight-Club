@@ -111,15 +111,27 @@ app.get('/categories', (req,res,next)=>{
 app.get('/cart/:id', async (req,res,next)=>{
   const order = await Order.findOne({where:{
       userId: req.params.id, 
-      placed: true}})
+      placed: false}})
   if(order){
     const cart = await LineItem.findAll({where:{orderId: order.dataValues.id}})
+    console.log('cart',cart)
     return res.status(200).send(cart)
   }
   else{
     res.status(400).send('no cart yet')
   } 
 })
+
+app.get('/newOrders/:id', async (req,res,next)=>{
+    const order = await Order.findAll({where:{
+        userId: req.params.id}})
+    if(order){
+      return res.status(200).send(order)
+    }
+    else{
+      res.status(400).send('no orders yet')
+    } 
+  })
 
 app.post('/api/cart/:id', async (req,res,next)=> {
   const order = await Order.findOne({where:{userId:req.params.id}})
@@ -172,7 +184,7 @@ app.put('/api/lineitems/:id', (req, res, next) => {
 })
 
 app.get('/api/orders', (req, res, next) => {
-  Order.findAll()
+  Order.findAll({where:{userId:req.params.id}})
     .then(orders => res.send(orders))
     .catch(next);
 })

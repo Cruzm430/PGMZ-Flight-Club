@@ -32,6 +32,7 @@ class Cart extends Component {
     }
     render() {
         const { cart } = this.props
+        console.log('cart',cart)
         return( 
             <div>
                 { 
