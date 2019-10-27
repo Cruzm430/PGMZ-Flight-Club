@@ -30,7 +30,6 @@ class Shoe extends Component {
     const { createLineItem, updateLineItem, orders, lineItems, shoes, match, user } = this.props;
     const shoe = shoes.find(_shoe => _shoe.id === match.params.id);
     const cart = orders.find(order => (!(order.placed) && order.userId === user.id));
-    console.log(lineItems.filter(item => item.orderId === cart.id));
     const { size } = this.state;
     const currItem = lineItems.find(item => ((cart.id === item.orderId) &&
       (shoe.id === item.shoeId) && (parseInt(size, 10) === parseInt(item.size, 10))));
@@ -44,7 +43,6 @@ class Shoe extends Component {
         size: size
       });
     }
-    console.log(lineItems.filter(item => item.orderId === cart.id));
   }
   render() {
     let isAdmin

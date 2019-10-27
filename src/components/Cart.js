@@ -31,13 +31,14 @@ class Cart extends Component {
         // console.log(this.props.cart)
     }
     render() {
-        const { cart } = this.props
+        const { cart } = this.props;
+        console.log(cart);
         return( 
             <div>
                 { 
                     cart.map(lineItem => {
                         return (<li key={lineItem.id}> 
-                            <div>{lineItem.name} {lineItem.size} {lineItem.quantity}</div>
+                            <div>{lineItem.shoe.name} {lineItem.size} {lineItem.quantity}</div>
                             </li>
                         )
                     })
