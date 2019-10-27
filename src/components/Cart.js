@@ -18,7 +18,8 @@ const sizeArray = () => {
           super()
       }
       render(){
-          console.log(this.props.lineItems)
+          const {orders, lineItems, shoes} = this.props
+          console.log(orders)
           return(
               <hr/>
           )
@@ -87,11 +88,12 @@ const sizeArray = () => {
 
   
 
-const mapStateToProps = ({user, cart, lineItems}, props) =>{
+const mapStateToProps = ({user, lineItems, shoes, orders}, props) =>{
     return{
         user,
-        cart,
         lineItems,
+        shoes,
+        orders,
         props
     }
 }
