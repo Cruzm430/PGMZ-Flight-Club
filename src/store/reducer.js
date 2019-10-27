@@ -32,7 +32,6 @@ const authReducer = (state = '', action) => {
 }
 
 const cartReducer = (state = [], action) => {
-    console.log('cartReducer', action.cart)
     switch(action.type){
         case SET_CART:
             return action.cart;
@@ -43,7 +42,6 @@ const cartReducer = (state = [], action) => {
 const lineItemsReducer = (state = [], action) => {
   switch (action.type) {
     case SET_LINE_ITEMS:
-      console.log(action.lineItems);
       return action.lineItems;
     case CREATE_LINE_ITEM:
       return [...state, action.lineItem];
