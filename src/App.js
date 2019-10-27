@@ -11,6 +11,7 @@ import Shoe from './Components/Shoe';
 import Orders from './Components/Orders';
 import UpdateShoe from './Components/UpdateShoe';
 import Cart from './Components/Cart';
+import Checkout from './Components/Checkout';
 //can we refactor these?
 
 class App extends Component{
@@ -35,6 +36,7 @@ class App extends Component{
           <Route path='/users/:id/orders' component={Orders} />
           <Route exact path='/product/:id' component={Shoe} />
           <Route path='/product/:id/update' component={UpdateShoe}/>
+          <Route path='/checkout' component={Checkout} />
         </Switch>
       </HashRouter>
     )
