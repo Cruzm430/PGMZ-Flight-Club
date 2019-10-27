@@ -13,15 +13,17 @@ class Welcome extends React.Component{
         this.props.logout()
     }
     render (){
-        const { logOut, addShoe } = this;
+        const { logOut } = this;
         const { user } = this.props;
         const { onClick } = this
+        let isAdmin = user.admin
         return (
             <div>
                 <div>Welcome {user.name}</div>
                 <Link to={`/users/${user.id}/orders`}>View Order History</Link>
-                {/* <div>{(this.props.user.admin === true) ? <AddShoe/> : ""}</div> */}
                 <Link to={'/cart'}>Cart</Link>
+                {isAdmin ? <Link to='/add'>Create</Link> : ''}
+                {isAdmin ? <Link to='/pendingOrders'>Pending Orders</Link> : ''}
                 <button onClick={logOut}>Log Out</button>
             </div>
         )

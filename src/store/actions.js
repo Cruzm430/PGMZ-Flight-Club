@@ -1,4 +1,4 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH, DELETE_SHOE, UPDATE_SHOE,SET_CART, SET_ORDERS, CREATE_LINE_ITEM, UPDATE_LINE_ITEM} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH, DELETE_SHOE, UPDATE_SHOE,SET_CART, SET_ORDERS, CREATE_LINE_ITEM, UPDATE_LINE_ITEM, DELETE_LINE_ITEM} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -79,6 +79,13 @@ const _updateLineItem = (lineItem) => {
   return {
     lineItem,
     type: UPDATE_LINE_ITEM
+  }
+}
+
+const _deleteLineItem = (lineItem) => {
+  return {
+    lineItem,
+    type:DELETE_LINE_ITEM
   }
 }
 
@@ -177,7 +184,7 @@ const updateCart = (user) => {
     // console.log('user to updatecart: ', user.id)
     return async(dispatch) => {
         const cart = (await axios.get(`/cart/${user.id}`)).data
-        console.log('cart', cart)
+        // console.log('cart', cart)
         return dispatch(_updateCart(cart))
     }
  }
@@ -203,6 +210,13 @@ const updateLineItem = (lineItem, update) => {
   }
 }
 
+const deleteLineItem = (lineItem) => {
+  return async (dispatch) =>{
+    await axios.delete(`/api/lineitems/${lineItem.id}`)
+    return dispatch(_deleteLineItem(lineItem))
+  }
+}
+
 const getOrders = () => {
   return async (dispatch) => {
     const orders = (await axios.get('/api/orders')).data
@@ -224,8 +238,10 @@ export {
   updateCart,
   deleteShoe,
   updateShoe,
+  createShoe,
   getLineItems,
   createLineItem,
   updateLineItem,
-  getOrders
+  getOrders,
+  deleteLineItem
 }

@@ -111,7 +111,7 @@ app.get('/categories', (req,res,next)=>{
 app.get('/cart/:id', async (req,res,next)=>{
   const order = await Order.findOne({where:{
       userId: req.params.id, 
-      placed: true}})
+      placed: false}})
   if(order){
     const cart = await LineItem.findAll({where:{orderId: order.dataValues.id}})
     return res.status(200).send(cart)
@@ -171,45 +171,15 @@ app.put('/api/lineitems/:id', (req, res, next) => {
     .catch(next)
 })
 
+app.delete('/api/lineitems/:id', (req,res,next)=>{
+  LineItem.findByPk(req.params.id)
+    .then(lineitem => lineitem.destroy())
+    .then(res.sendStatus(204))
+    .catch(next)
+})
+
 app.get('/api/orders', (req, res, next) => {
   Order.findAll()
     .then(orders => res.send(orders))
     .catch(next);
 })
-
-// app.get('/api/orders/:id', (req, res, next) => {
-//   Order.findAll({
-//     where: {
-//       userId: req.params.id
-//     }
-//   })
-//     .then(orders => res.send(orders))
-//     .catch(next)
-// })
-
-// app.get('/cart/:id', async (req,res,next)=>{
-//   const order = await Order.findOne({where:{userId: req.params.id}})
-//   if(order){
-//     return res.status(200).send(order)
-//   }
-//   else{
-//     res.status(400).send('no cart yet')
-//   }
-// })
-
-// app.post('/api/cart/:id', async (req,res,next)=> {
-//   const order = await Order.findOne({where:{userId:req.params.id}})
-//   if(order){
-//     LineItem.create(req.body)
-//     .then(newLine => res.send(newLine))
-//     .then(()=> res.sendStatus(201))
-//     .catch(next)
-//   }
-//   else{
-//     Order.create(req.params)
-//     .then(LineItem.create(req.body))
-//     .then(newLine => res.send(newLine))
-//     .then(()=>res.sendStatus(201))
-//     .catch(next)
-//   }
-// })

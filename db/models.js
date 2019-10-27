@@ -95,7 +95,11 @@ const Order = conn.define('order', {
   placed: {
     type: BOOLEAN,
     defaultValue: false
-  }
+  },
+  name:{
+    type:STRING,
+    allowNull:false
+}
 })
 
 Shoe.belongsTo(Category);
