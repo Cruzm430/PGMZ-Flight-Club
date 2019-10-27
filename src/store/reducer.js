@@ -31,15 +31,6 @@ const authReducer = (state = '', action) => {
     return state
 }
 
-const cartReducer = (state = [], action) => {
-    console.log('cartReducer', action.cart)
-    switch(action.type){
-        case SET_CART:
-            return action.cart;
-        }
-        return state
-}
-
 const lineItemsReducer = (state = [], action) => {
   switch (action.type) {
     case SET_LINE_ITEMS:
@@ -56,6 +47,7 @@ const lineItemsReducer = (state = [], action) => {
 }
 
 const ordersReducer = (state = [], action) => {
+    // console.log('ordersReducer', action.orders)
   switch (action.type) {
     case SET_ORDERS:
       return action.orders;
@@ -75,7 +67,6 @@ const reducer = combineReducers({
   categories: categoriesReducer,
   lineItems: lineItemsReducer,
   orders: ordersReducer,
-  cart: cartReducer
 })
 
 export default reducer;
