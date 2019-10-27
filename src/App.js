@@ -11,6 +11,7 @@ import Shoe from './Components/Shoe';
 import Orders from './Components/Orders';
 import UpdateShoe from './Components/UpdateShoe';
 import Cart from './Components/Cart';
+import Checkout from './Components/Checkout';
 //can we refactor these?
 
 class App extends Component{
@@ -18,7 +19,8 @@ class App extends Component{
     this.props.getShoes()
     this.props.getCategories()
     this.props.attemptSessionLogin()
-    this.props.getOrders()
+    this.props.getOrders(this.props.user)
+    this.props.getLineItems()
     .catch(ex => console.log(ex));
   }
   render(){
@@ -31,21 +33,23 @@ class App extends Component{
           <Route exact path='/' component={Home}/> 
           <Route exact path='/add' component={AddShoe}/>
           <Route path='/cart' component={Cart}/>
-          <Route path='/users/:id/orders' component={Orders} />
+          <Route path='/orders' component={Orders} />
           <Route exact path='/product/:id' component={Shoe} />
           <Route path='/product/:id/update' component={UpdateShoe}/>
+          <Route path='/checkout' component={Checkout} />
         </Switch>
       </HashRouter>
     )
   }
 }
 
-const mapStateToProps = ({ users, shoes, categories, orders}, props)=>{
+const mapStateToProps = ({ users, shoes, categories, orders, lineItems }, props)=>{
   return{
     users,
-    shoes, 
+    shoes,
     categories,
     orders,
+    lineItems,
     props
   }
 }
@@ -55,7 +59,8 @@ const mapDispatchToProps = (dispatch) => {
     getUsers: () => dispatch(actions.getUsers()),
     getShoes: () => dispatch(actions.getShoes()),
     getCategories: () => dispatch(actions.getCategories()),
-    getOrders: () => dispatch(actions.getOrders()),
+    getOrders: (user) => dispatch(actions.getOrders(user)),
+    getLineItems: () => dispatch(actions.getLineItems()),
     attemptSessionLogin: () => dispatch(actions.attemptSessionLogin())
   }
 }

@@ -55,7 +55,7 @@ const syncAndSeed = async() =>{
     {quantity: 2, size: 9.5, shoeId: Concord.Id, orderId: GreyCartUnPlaced.id, name: Concord.name},
     {quantity: 4, size: 10, shoeId: Supreme.id, orderId: GreyCartUnPlaced.id, name: Supreme.name},
     {quantity: 2, size: 9.5, shoeId: NMD.id, orderId: GreyCartUnPlaced.id, name: NMD.name},
-    {quantity: 2, size: 10, shoeId:Supreme.id, orderId: GreyCart.id, name: Supreme.name},
+    {quantity: 2, size: 10, shoeId:Supreme.id, orderId: GreyCartUnPlaced.id, name: Supreme.name},
 ]
   const madeItems = await Promise.all(lineItems.map(lineItem => LineItem.create(lineItem)));
 

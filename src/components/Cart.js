@@ -4,105 +4,58 @@ import {actions} from '../store'
 import {TextField, Card, CardContent, Button, FormControl, MenuItem, Select, InputLabel, Typography} from '@material-ui/core'
 // import { json } from 'sequelize/types';
 
-const sizeArray = () => {
-    const arr = [];
-    for (let i = 0; i < 15; i++) {
-      arr.push(6 + (i * 0.5));
+class Cart extends Component {
+    constructor () {
+        super()
+        // this.load = this.load.bind(this)
+        this.onClick = this.onClick.bind(this)
     }
-    return arr;
-  }
+    onClick(){
+        console.log('onClick')
+    }
+    render() {
+        const { lineItems, shoes, user } = this.props
+        if (lineItems.length === null){
+            return 'No Cart';
+          }
+        return( 
+            <div>
+                { 
+                    lineItems.map(lineItem => {
+                        const shoe = shoes.find(_shoe => _shoe.id === lineItem.shoeId);
+                        return (<div key={lineItem.id}> 
+                            <div>
+                            {
+                                 shoe ? <div>{shoe.name}</div> : ''
+                            }
+                            </div><div> {lineItem.size} {lineItem.quantity}</div>
+                            <button onClick={()=>this.props.deleteLineItem(lineItem)}>x</button>
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        )
+    }
+}
 
-
-  class Cart extends Component {
-      constructor(){
-          super()
-      }
-      render(){
-          const {orders, lineItems, shoes} = this.props
-          console.log(orders)
-          return(
-              <hr/>
-          )
-      }
-  }
-// class Cart extends Component {
-//     constructor () {
-//         super()
-//         this.load = this.load.bind(this)
-//         this.onChange = this.onChange.bind(this)
-//         this.state={
-//             cart:{}
-//         }
-//     }
-//     componentDidMount(){
-//         // console.log('mounting',this.props)
-//        if(this.props.user !== "") {
-//            const cart = this.load()
-//            this.setState({cart})
-//        }
-//     }
-//     componentDidUpdate(prevProps){
-//         console.log(prevProps)
-//         if(JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
-//             // console.log('updating')
-//             this.load()
-//             this.setState({cart})
-//         }
-//     }
-//     async load() {
-//         // console.log('loading', this.props.user)
-//         //will create an action in future
-//         this.props.updateCart(this.props.user)
-//         // console.log(this.props.cart)
-//     }
-//     onChange(ev){
-//         return null
-//     }
-//     onClick(lineItem){
-//         this.props.deleteLineItem(lineItem)
-//     }
-//     render() {
-//         const { user } = this.props
-//         const arr = sizeArray()
-//             return(
-//                 null
-//                 // <Card>
-//                 //     <CardContent>
-//                 //         <Typography>{this.props.user.name}'s Order</Typography>
-//                 //         {
-//                 //         cart.map(lineItem=> <Card key={lineItem.id} style={{width:'50%', margin:'10px'}}>
-//                 //             <CardContent>{lineItem.name}    
-//                 //             <TextField
-//                 //             label='Quantity'
-//                 //             onChange={this.onChange}
-//                 //             />
-//                 //             </CardContent>
-//                 //             <Button onClick={()=>this.onClick(lineItem)}>x</Button>
-//                 //         </Card>)
-//                 //     }
-//                 //     </CardContent>
-//                 // </Card>
-//         )
-//     }
-// }
 
   
 
-const mapStateToProps = ({user, lineItems, shoes, orders}, props) =>{
+const mapStateToProps = ({user, lineItems, shoes}, props) =>{
     return{
+        shoes,
         user,
         lineItems,
-        shoes,
-        orders,
         props
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        updateCart: (user) => dispatch(actions.updateCart(user)),
-        deleteLineItem: (lineItem) => dispatch(actions.deleteLineItem(lineItem))
+        deleteLineItem: (lineItem) => dispatch(actions.deleteLineItem(lineItem)),
+        updateLineItem: (lineItem, update) => dispatch(actions.updateLineItem(lineItem,update)) 
     }
-  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cart)

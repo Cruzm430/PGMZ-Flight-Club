@@ -79,10 +79,6 @@ const LineItem = conn.define('lineitem', {
   size: {
     type: DECIMAL,
     allowNull: false
-  },
-  name:{
-      type:STRING,
-      allowNull:false
   }
 })
 

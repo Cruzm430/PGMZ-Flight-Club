@@ -113,13 +113,28 @@ app.get('/cart/:id', async (req,res,next)=>{
       userId: req.params.id, 
       placed: false}})
   if(order){
-    const cart = await LineItem.findAll({where:{orderId: order.dataValues.id}})
+    const cart = await LineItem.findAll(
+      {
+        where: {orderId: order.dataValues.id},
+        include: [{model: Shoe}]
+      })
     return res.status(200).send(cart)
   }
   else{
     res.status(400).send('no cart yet')
   } 
 })
+
+app.get('/newOrders/:id', async (req,res,next)=>{
+    const order = await Order.findAll({where:{
+        userId: req.params.id}})
+    if(order){
+      return res.status(200).send(order)
+    }
+    else{
+      res.status(400).send('no orders yet')
+    } 
+  })
 
 app.post('/api/cart/:id', async (req,res,next)=> {
   const order = await Order.findOne({where:{userId:req.params.id}})
@@ -152,7 +167,9 @@ app.put('/api/orders/:id', (req, res, next) => {
 })
 
 app.get('/api/lineitems', (req, res, next) => {
-  LineItem.findAll()
+  LineItem.findAll({
+    include: [{model: Shoe}]
+  })
     .then(lineitems => res.send(lineitems))
     .catch(next);
 })
@@ -179,7 +196,7 @@ app.delete('/api/lineitems/:id', (req,res,next)=>{
 })
 
 app.get('/api/orders', (req, res, next) => {
-  Order.findAll()
+  Order.findAll({where:{userId:req.params.id}})
     .then(orders => res.send(orders))
     .catch(next);
 })

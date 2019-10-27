@@ -1,4 +1,6 @@
-import {SET_USERS, SET_SHOES, SET_CATEGORIES, CREATE_SHOE, DUMMY_KEY, SET_AUTH, DELETE_SHOE, UPDATE_SHOE,SET_CART, SET_ORDERS, CREATE_LINE_ITEM, UPDATE_LINE_ITEM, DELETE_LINE_ITEM} from './constants';
+import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_ORDERS, CREATE_SHOE, DUMMY_KEY, SET_AUTH,
+  DELETE_SHOE, UPDATE_SHOE, CREATE_LINE_ITEM, UPDATE_LINE_ITEM, SET_LINE_ITEMS, SET_CART,
+  CREATE_ORDER, UPDATE_ORDER, DELETE_LINE_ITEM} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -54,13 +56,6 @@ const _login = (user) => {
     }
 }
 
-const _updateCart = (cart) => {
-    return{
-        cart,
-        type: SET_CART
-    }
-}
-
 const setLineItems = (lineItems) => {
   return {
     lineItems,
@@ -93,6 +88,20 @@ const setOrders = (orders) => {
   return {
     orders,
     type: SET_ORDERS
+  }
+}
+
+const _updateOrder = (order) => {
+  return {
+    order,
+    type: UPDATE_ORDER
+  }
+}
+
+const _createOrder = (order) => {
+  return {
+    order,
+    type: CREATE_ORDER
   }
 }
 
@@ -179,17 +188,7 @@ const updateShoe = (shoe, update) => {
     return dispatch(_updateShoe(update))
   }
 }
-
-const updateCart = (user) => {
-    // console.log('testing save')
-    // console.log('user to updatecart: ', user.id)
-    return async(dispatch) => {
-        const cart = (await axios.get(`/cart/${user.id}`)).data
-        // console.log('cart', cart)
-        return dispatch(_updateCart(cart))
-    }
- }
-
+ 
 const getLineItems = () => {
   return async (dispatch) => {
     const lineItems = (await axios.get('/api/lineitems')).data
@@ -198,7 +197,7 @@ const getLineItems = () => {
 }
 
 const createLineItem = (lineItem) => {
-  return async (dispatch)=>{
+  return async (dispatch) => {
     const created = (await axios.post('/api/lineitems', lineItem)).data
     return dispatch(_createLineItem(created))
   }
@@ -220,8 +219,22 @@ const deleteLineItem = (lineItem) => {
 
 const getOrders = () => {
   return async (dispatch) => {
-    const orders = (await axios.get('/api/orders')).data
+    const orders = (await axios.get(`/api/orders/${user.id}`)).data
     return dispatch(setOrders(orders));
+  }
+}
+
+const createOrder = (order) => {
+  return async (dispatch) => {
+    const created = (await axios.post('/api/orders', order)).data
+    return dispatch(_createOrder(created))
+  }
+}
+
+const updateOrder = (order, update) => {
+  return async (dispatch) => {
+    const newOrder = (await axios.put(`/api/orders/${order.id}`, update)).data
+    return dispatch(_updateOrder(newOrder));
   }
 }
 
@@ -236,7 +249,6 @@ export {
   attemptLogin,
   searchByName,
   searchByCat,
-  updateCart,
   deleteShoe,
   updateShoe,
   createShoe,
@@ -244,5 +256,7 @@ export {
   createLineItem,
   updateLineItem,
   getOrders,
-  deleteLineItem
+  deleteLineItem,
+  createOrder,
+  updateOrder
 }

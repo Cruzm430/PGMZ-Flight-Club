@@ -44,4 +44,3 @@ const mapStateToProps = ({shoes, user}) =>{
 }
 
 export default connect(mapStateToProps)(Header)
-
