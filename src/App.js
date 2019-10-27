@@ -19,11 +19,23 @@ class App extends Component{
     this.props.getShoes()
     this.props.getCategories()
     this.props.attemptSessionLogin()
-    this.props.getOrders()
     this.props.getLineItems()
     .catch(ex => console.log(ex));
   }
   render(){
+    const {getOrders, user} = this.props;
+    // if (!user) {
+    //   return '...loading';
+    // }
+    // if (!orders.length) {
+    //   getOrders(user);
+    //   return '...loading';
+    // }
+    try {
+      if (user) getOrders(user);
+    } catch {
+      console.log('No one logged in, or still loading');
+    }
     return (
       <HashRouter>
         <Route component={Header}/>
@@ -33,7 +45,7 @@ class App extends Component{
           <Route exact path='/' component={Home}/> 
           <Route exact path='/add' component={AddShoe}/>
           <Route path='/cart' component={Cart}/>
-          <Route path='/users/:id/orders' component={Orders} />
+          <Route path='/orders' component={Orders} />
           <Route exact path='/product/:id' component={Shoe} />
           <Route path='/product/:id/update' component={UpdateShoe}/>
           <Route path='/checkout' component={Checkout} />
@@ -43,13 +55,14 @@ class App extends Component{
   }
 }
 
-const mapStateToProps = ({ users, shoes, categories, orders, lineItems }, props)=>{
+const mapStateToProps = ({ users, shoes, categories, orders, lineItems, user }, props)=>{
   return{
     users,
     shoes,
     categories,
     orders,
     lineItems,
+    user,
     props
   }
 }
@@ -59,7 +72,7 @@ const mapDispatchToProps = (dispatch) => {
     getUsers: () => dispatch(actions.getUsers()),
     getShoes: () => dispatch(actions.getShoes()),
     getCategories: () => dispatch(actions.getCategories()),
-    getOrders: () => dispatch(actions.getOrders()),
+    getOrders: (user) => dispatch(actions.getOrders(user)),
     getLineItems: () => dispatch(actions.getLineItems()),
     attemptSessionLogin: () => dispatch(actions.attemptSessionLogin())
   }

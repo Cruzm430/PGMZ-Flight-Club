@@ -125,6 +125,17 @@ app.get('/cart/:id', async (req,res,next)=>{
   } 
 })
 
+app.get('/api/orders/:userId', async (req,res,next)=>{
+    const order = await Order.findAll({where:{
+        userId: req.params.userId}})
+    if(order){
+      return res.status(200).send(order)
+    }
+    else{
+      res.status(400).send('no orders yet')
+    } 
+  })
+
 app.post('/api/cart/:id', async (req,res,next)=> {
   const order = await Order.findOne({where:{userId:req.params.id}})
   if(order){
@@ -177,8 +188,8 @@ app.put('/api/lineitems/:id', (req, res, next) => {
     .catch(next)
 })
 
-app.get('/api/orders', (req, res, next) => {
-  Order.findAll()
+app.get('/api/orders/:id', (req, res, next) => {
+  Order.findAll({where:{userId:req.params.id}})
     .then(orders => res.send(orders))
     .catch(next);
 })

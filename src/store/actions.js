@@ -56,13 +56,6 @@ const _login = (user) => {
     }
 }
 
-const _updateCart = (cart) => {
-    return{
-        cart,
-        type: SET_CART
-    }
-}
-
 const setLineItems = (lineItems) => {
   return {
     lineItems,
@@ -102,6 +95,13 @@ const _createOrder = (order) => {
   return {
     order,
     type: CREATE_ORDER
+  }
+}
+
+const getCart = (cart) => {
+  return {
+    cart,
+    type: SET_CART
   }
 }
 
@@ -187,17 +187,7 @@ const updateShoe = (shoe, update) => {
     return dispatch(_updateShoe(update))
   }
 }
-
-const updateCart = (user) => {
-    // console.log('testing save')
-    // console.log('user to updatecart: ', user.id)
-    return async(dispatch) => {
-        const cart = (await axios.get(`/cart/${user.id}`)).data
-        console.log('cart', cart)
-        return dispatch(_updateCart(cart))
-    }
- }
-
+ 
 const getLineItems = () => {
   return async (dispatch) => {
     const lineItems = (await axios.get('/api/lineitems')).data
@@ -219,9 +209,9 @@ const updateLineItem = (lineItem, update) => {
   }
 }
 
-const getOrders = () => {
+const getOrders = (user) => {
   return async (dispatch) => {
-    const orders = (await axios.get('/api/orders')).data
+    const orders = (await axios.get(`/api/orders/${user.id}`)).data
     return dispatch(setOrders(orders));
   }
 }
@@ -251,13 +241,13 @@ export {
   attemptLogin,
   searchByName,
   searchByCat,
-  updateCart,
   deleteShoe,
   updateShoe,
   getLineItems,
   createLineItem,
   updateLineItem,
   getOrders,
+  getCart,
   createOrder,
   updateOrder
 }

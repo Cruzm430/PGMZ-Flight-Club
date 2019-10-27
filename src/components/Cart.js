@@ -5,40 +5,34 @@ import {TextField, Card, CardContent, Button, FormControl, MenuItem, Select, Inp
 import axios from 'axios'
 // import { json } from 'sequelize/types';
 import { loadavg } from 'os';
+import { getLineItems } from '../store/actions';
 
 class Cart extends Component {
     constructor () {
         super()
-        this.load = this.load.bind(this)
-    }
-    componentDidMount(){
-        // console.log('mounting',this.props)
-       if(this.props.user !== "") {
-           this.load()
-       }
-       
-    }
-    componentDidUpdate(prevProps){
-        if(JSON.stringify(prevProps) !== JSON.stringify(this.props)) {
-            // console.log('updating')
-            this.load()
-        }
-    }
-    async load() {
-        // console.log('loading', this.props.user)
-        //will create an action in future
-        this.props.updateCart(this.props.user)
-        // console.log(this.props.cart)
+        // this.load = this.load.bind(this)
     }
     render() {
-        const { cart } = this.props;
-        console.log(cart);
-        return( 
+        console.log(this.props);
+        const { lineItems, shoes, getOrders, user } = this.props
+        
+        if (!(lineItems.length)){
+            //getOrders(user);
+            return 'No Cart';
+          }
+        return(
             <div>
                 { 
-                    cart.map(lineItem => {
+                    lineItems.map(lineItem => {
+                        console.log("shoeArray", shoes)
+                        const shoe = shoes.find(_shoe => _shoe.id === lineItem.shoeId);
+                        console.log("lineItemShoe", shoe)
                         return (<li key={lineItem.id}> 
-                            <div>{lineItem.shoe.name} {lineItem.size} {lineItem.quantity}</div>
+                            <div>
+                            {
+                                 shoe ? <div>{shoe.name}</div> : ''
+                            }
+                            </div><div> {lineItem.size} {lineItem.quantity}</div>
                             </li>
                         )
                     })
@@ -49,18 +43,21 @@ class Cart extends Component {
 }
   
 
-const mapStateToProps = ({user, cart}, props) =>{
+const mapStateToProps = ({user, lineItems, orders, shoes}, props) =>{
     return{
+        shoes,
         user,
-        cart,
+        lineItems,
+        orders,
         props
     }
 }
 
-const mapDispatchToProps = (dispatch) =>{
-    return{
-        updateCart: (user) => dispatch(actions.updateCart(user))
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getOrders: user => dispatch(actions.getOrders(user))
     }
-  }
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart)
+
+export default connect(mapStateToProps, null)(Cart)
