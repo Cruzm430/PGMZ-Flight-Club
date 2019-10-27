@@ -5,15 +5,29 @@ import { actions } from '../store'
 class Checkout extends Component {
   constructor() {
     super();
+    this.state = {
+
+    }
     this.checkOut = this.checkOut.bind(this);
+    this.getCart = this.getCart.bind(this);
+  }
+  getCart() {
+    const { user, orders } = this.props;
+    return orders.find(order => (!(order.placed) && order.userId === user.id))
+  }
+  getLineItems() {
+    const { lineItems } = this.props;
+    const cart = this.getCart();
+    return lineItems.filter(item => item.orderId === cart.id);
   }
   checkOut() {
-    const { user, orders, createOrder, updateOrder } = this.props;
-    const cart = orders.find(order => (!(order.placed) && order.userId === user.id))
+    const { user, createOrder, updateOrder } = this.props;
+    const cart = this.getCart();
     updateOrder(cart, {placed: true});
     createOrder({userId: user.id});
   }
   render() {
+    const cartItems = this.getLineItems();
     return (
       <div>
         <button onClick={this.checkOut}>Check Out</button>
@@ -22,10 +36,11 @@ class Checkout extends Component {
   }
 }
 
-const mapStateToProps = ({user, orders}) => {
+const mapStateToProps = ({user, orders, lineItems}) => {
   return {
     user,
-    orders
+    orders,
+    lineItems
   }
 }
 
