@@ -28,20 +28,21 @@ class Shoe extends Component {
     
   }
   addToCart() {
-    const { createLineItem, updateLineItem, orders, lineItems, shoes, match, user, cart } = this.props;
+    const { createLineItem, updateLineItem, orders, lineItems, shoes, match, user} = this.props;
     const { size } = this.state;
+    const cart = orders.find(order => !(order.placed));
     
     const shoe = shoes.find(_shoe => _shoe.id === match.params.id);
     console.log("shoe",shoe)
-    const orderId = lineItems[0].orderId
     const currItem = lineItems.find(item => (
-        (shoe.id === item.shoeId) && (parseInt(size, 10) === parseInt(item.size, 10))));
+        (cart.id === item.orderId) && (shoe.id === item.shoeId)
+        && (parseInt(size, 10) === parseInt(item.size, 10))));
     
         if (currItem) {
         updateLineItem(currItem, {quantity: currItem.quantity + 1});
         } else {
         createLineItem({
-            orderId: orderId,
+            orderId: cart.id,
             shoeId: shoe.id,
             quantity: 1,
             size: size,

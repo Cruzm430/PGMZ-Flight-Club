@@ -12,15 +12,18 @@ class Cart extends Component {
         // this.load = this.load.bind(this)
     }
     render() {
-        const { lineItems, shoes } = this.props
-        console.log(this.props);
-        if (lineItems.length === null){
-            return 'No Cart';
-          }
+        const { lineItems, shoes, orders } = this.props;
+        if (!orders.length) {
+            return '...loading';
+        }
+        const cart = orders.find(order => !(order.placed));
+        console.log(lineItems);
+        const cartItems = lineItems.filter(item => item.orderId === cart.id);
         return( 
             <div>
                 { 
-                    lineItems.map(lineItem => {
+                    lineItems.filter(item => item.orderId === cart.id)
+                        .map(lineItem => {
                         const shoe = shoes.find(_shoe => _shoe.id === lineItem.shoeId);
                         return (<li key={lineItem.id}> 
                             <div>

@@ -48,13 +48,14 @@ class App extends Component{
   }
 }
 
-const mapStateToProps = ({ users, shoes, categories, orders, lineItems }, props)=>{
+const mapStateToProps = ({ users, shoes, categories, orders, lineItems, user }, props)=>{
   return{
     users,
     shoes,
     categories,
     orders,
     lineItems,
+    user,
     props
   }
 }

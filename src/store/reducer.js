@@ -34,7 +34,6 @@ const authReducer = (state = '', action) => {
 const lineItemsReducer = (state = [], action) => {
   switch (action.type) {
     case SET_LINE_ITEMS:
-      console.log(action.lineItems);
       return action.lineItems;
     case CREATE_LINE_ITEM:
       return [...state, action.lineItem];
