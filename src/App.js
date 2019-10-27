@@ -19,11 +19,16 @@ class App extends Component{
     this.props.getShoes()
     this.props.getCategories()
     this.props.attemptSessionLogin()
-    this.props.getOrders(this.props.user)
     this.props.getLineItems()
     .catch(ex => console.log(ex));
   }
   render(){
+    const {getOrders, user} = this.props;
+    try {
+      if (user) getOrders(user);
+    } catch {
+      console.log('No one logged in, or still loading');
+    }
     return (
       <HashRouter>
         <Route component={Header}/>
