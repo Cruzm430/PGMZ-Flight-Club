@@ -56,13 +56,6 @@ const _login = (user) => {
     }
 }
 
-const _updateCart = (cart) => {
-    return{
-        cart,
-        type: SET_CART
-    }
-}
-
 const setLineItems = (lineItems) => {
   return {
     lineItems,
@@ -187,13 +180,6 @@ const updateShoe = (shoe, update) => {
     return dispatch(_updateShoe(update))
   }
 }
-
-const updateCart = (user) => {
-    return async(dispatch) => {
-        const cart = (await axios.get(`/cart/${user.id}`)).data
-        return dispatch(_updateCart(cart))
-    }
- }
  
 const getLineItems = () => {
   return async (dispatch) => {
@@ -205,7 +191,6 @@ const getLineItems = () => {
 const createLineItem = (lineItem) => {
   return async (dispatch) => {
     const created = (await axios.post('/api/lineitems', lineItem)).data
-    console.log(created)
     return dispatch(_createLineItem(created))
   }
 }
@@ -219,9 +204,7 @@ const updateLineItem = (lineItem, update) => {
 
 const getOrders = (user) => {
   return async (dispatch) => {
-    console.log('user', user)
     const orders = (await axios.get(`/api/orders/${user.id}`)).data
-    console.log('orders', orders)
     return dispatch(setOrders(orders));
   }
 }
@@ -251,7 +234,6 @@ export {
   attemptLogin,
   searchByName,
   searchByCat,
-  updateCart,
   deleteShoe,
   updateShoe,
   getLineItems,

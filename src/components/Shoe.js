@@ -22,7 +22,6 @@ class Shoe extends Component {
   }
   componentDidMount() {
     this.props.getShoes();
-    this.props.updateCart(this.props.user)
   }
   componentDidUpdate() {
     if (!(this.state.size)) this.setState({size: 6});
@@ -33,8 +32,9 @@ class Shoe extends Component {
     const { size } = this.state;
     
     const shoe = shoes.find(_shoe => _shoe.id === match.params.id);
-    const orderId = cart[0].orderId
-    const currItem = cart.find(item => (
+    console.log("shoe",shoe)
+    const orderId = lineItems[0].orderId
+    const currItem = lineItems.find(item => (
         (shoe.id === item.shoeId) && (parseInt(size, 10) === parseInt(item.size, 10))));
     
         if (currItem) {
@@ -87,12 +87,11 @@ class Shoe extends Component {
   }
 }
 
-export default connect(({shoes, user, orders, cart, lineItems}) => {
+export default connect(({shoes, user, orders, lineItems}) => {
   return {
     shoes,
     user,
     orders,
-    cart,
     lineItems
   }
 }, (dispatch) => {
