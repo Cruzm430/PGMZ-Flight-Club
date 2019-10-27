@@ -32,13 +32,12 @@ class Cart extends Component {
     }
     render() {
         const { cart } = this.props
-        console.log('cart',cart)
         return( 
             <div>
                 { 
                     cart.map(lineItem => {
                         return (<li key={lineItem.id}> 
-                            <div>{lineItem.name} {lineItem.size} {lineItem.quantity}</div>
+                            <div>{lineItem.shoe.name} {lineItem.size} {lineItem.quantity}</div>
                             </li>
                         )
                     })

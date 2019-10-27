@@ -113,8 +113,11 @@ app.get('/cart/:id', async (req,res,next)=>{
       userId: req.params.id, 
       placed: false}})
   if(order){
-    const cart = await LineItem.findAll({where:{orderId: order.dataValues.id}})
-    console.log('cart',cart)
+    const cart = await LineItem.findAll(
+      {
+        where: {orderId: order.dataValues.id},
+        include: [{model: Shoe}]
+      })
     return res.status(200).send(cart)
   }
   else{
@@ -164,7 +167,9 @@ app.put('/api/orders/:id', (req, res, next) => {
 })
 
 app.get('/api/lineitems', (req, res, next) => {
-  LineItem.findAll()
+  LineItem.findAll({
+    include: [{model: Shoe}]
+  })
     .then(lineitems => res.send(lineitems))
     .catch(next);
 })

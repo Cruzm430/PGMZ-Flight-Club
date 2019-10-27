@@ -48,7 +48,6 @@ class Shoe extends Component {
             name: shoe.name
         });
         }
-    console.log('cart',cart)
   }
 
   render() {
