@@ -25,32 +25,34 @@ class Shoe extends Component {
   }
   componentDidUpdate() {
     if (!(this.state.size)) this.setState({size: 6});
+    
   }
   addToCart() {
-    const { createLineItem, updateLineItem, orders, lineItems, shoes, match, user } = this.props;
-    const shoe = shoes.find(_shoe => _shoe.id === match.params.id);
-    const cart = orders.find(order => (!(order.placed) && order.userId === user.id));
+    const { createLineItem, updateLineItem, orders, lineItems, shoes, match, user, cart } = this.props;
     const { size } = this.state;
-    const currItem = lineItems.find(item => ((cart.id === item.orderId) &&
-      (shoe.id === item.shoeId) && (parseInt(size, 10) === parseInt(item.size, 10))));
-    if (currItem) {
-      updateLineItem(currItem, {quantity: currItem.quantity + 1});
-    } else {
-      createLineItem({
-        orderId: cart.id,
-        shoeId: shoe.id,
-        quantity: 1,
-        size: size
-      });
-    }
+    
+    const shoe = shoes.find(_shoe => _shoe.id === match.params.id);
+    console.log("shoe",shoe)
+    const orderId = lineItems[0].orderId
+    const currItem = lineItems.find(item => (
+        (shoe.id === item.shoeId) && (parseInt(size, 10) === parseInt(item.size, 10))));
+    
+        if (currItem) {
+        updateLineItem(currItem, {quantity: currItem.quantity + 1});
+        } else {
+        createLineItem({
+            orderId: orderId,
+            shoeId: shoe.id,
+            quantity: 1,
+            size: size,
+            name: shoe.name
+        });
+        }
   }
+
   render() {
-    let isAdmin
-    if (this.props.user){
-      isAdmin = this.props.user.admin
-    }
     const sizes = sizeArray();
-    const { shoes, match, deleteShoe, history } = this.props;
+    const { shoes, match, deleteShoe, history, user } = this.props;
     const shoe = shoes.find(_shoe => _shoe.id === match.params.id);
     if (!shoe){
       return '....loading';
@@ -63,12 +65,14 @@ class Shoe extends Component {
         <select onChange={(ev) => { this.setState({size: ev.target.value})}}>
           {sizes.map(size => <option key={size} value={size}>{size}</option>)}
         </select>
-        <button onClick={this.addToCart}>Add To Cart</button>
         {
-          isAdmin ? <Link to={`/product/${shoe.id}/update`}><button style={{color: 'red'}}>Edit Shoe</button></Link> : ''
+            user ? <button onClick={this.addToCart}>Add To Cart</button> : ''
         }
         {
-          isAdmin ?
+          user.admin !== null && user.admin === true  ? <Link to={`/product/${shoe.id}/update`}><button style={{color: 'red'}}>Edit Shoe</button></Link> : ''
+        }
+        {
+          user.admin ?
           <button
             style={{color: 'red'}}
             onClick={() => {
@@ -95,6 +99,7 @@ export default connect(({shoes, user, orders, lineItems}) => {
     deleteShoe: (shoe) => dispatch(actions.deleteShoe(shoe)),
     getShoes: () => dispatch(actions.getShoes()),
     createLineItem: (lineItem) => dispatch(actions.createLineItem(lineItem)),
-    updateLineItem: (lineItem, update) => dispatch(actions.updateLineItem(lineItem, update))
+    updateLineItem: (lineItem, update) => dispatch(actions.updateLineItem(lineItem, update)),
+    updateCart: (user) => dispatch(actions.updateCart(user))
   }
 })(Shoe);
