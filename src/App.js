@@ -25,10 +25,11 @@ class App extends Component{
   }
   render(){
     return (
+  
       <HashRouter>
         <Route component={Header}/>
-        <Route component={CatFilter}/>
-        <Route component={Search}/>
+        {/* <Route component={CatFilter}/> */}
+        {/* <Route component={Search}/> */}
         <Switch>
           <Route exact path='/' component={Home}/> 
           <Route exact path='/add' component={AddShoe}/>

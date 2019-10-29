@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {actions} from '../store' 
+import { Typography } from '@material-ui/core';
 
 
 class Login extends React.Component{
@@ -27,7 +28,7 @@ class Login extends React.Component{
         const { onChange, onSubmit } = this
         return ( 
           <div>
-            <p>Login</p>
+            <Typography>Login</Typography>
             <form>
                 <input type="text" onChange={onChange} name="email" />
                 <input type="text" onChange={onChange} name="password" />

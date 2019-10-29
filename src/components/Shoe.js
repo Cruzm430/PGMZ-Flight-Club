@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from '../store';
+import { CardMedia, Grid, Button, Card, CardContent, Typography, Select, MenuItem } from '@material-ui/core';
 
 const sizeArray = () => {
   const arr = [];
@@ -16,16 +17,19 @@ class Shoe extends Component {
   constructor() {
     super();
     this.state = {
-      size: 0
+      size: ''
     }
     this.addToCart = this.addToCart.bind(this);
+    this.onChange = this.onChange.bind(this)
   }
   componentDidMount() {
     this.props.getShoes();
   }
   componentDidUpdate() {
-    if (!(this.state.size)) this.setState({size: 6});
-    
+    if (!(this.state.size)) this.setState({size: 6}); 
+  }
+  onChange(ev){
+    this.setState({size: ev.target.value})
   }
   addToCart() {
     const { createLineItem, updateLineItem, orders, lineItems, shoes, match, user, cart } = this.props;
@@ -38,7 +42,8 @@ class Shoe extends Component {
         (shoe.id === item.shoeId) && (parseInt(size, 10) === parseInt(item.size, 10))));
     
         if (currItem) {
-        updateLineItem(currItem, {quantity: currItem.quantity + 1});
+          currItem.quantity = currItem.quantity *1
+        updateLineItem(currItem, {quantity: currItem.quantity + 1})
         } else {
         createLineItem({
             orderId: orderId,
@@ -54,37 +59,55 @@ class Shoe extends Component {
     const sizes = sizeArray();
     const { shoes, match, deleteShoe, history, user } = this.props;
     const shoe = shoes.find(_shoe => _shoe.id === match.params.id);
+    
     if (!shoe){
       return '....loading';
-    }
+    }else{
+      const img = shoe.imageURL
     return (
       <div>
-        <img src={shoe.imageURL} alt={shoe.name} />
-        <p>{shoe.name}: ${shoe.price}</p>
-        <span>Size: </span>
-        <select onChange={(ev) => { this.setState({size: ev.target.value})}}>
-          {sizes.map(size => <option key={size} value={size}>{size}</option>)}
-        </select>
+        <Grid container style={{height:'80%', width:'80%', justifyContent:'center'}}>
+          <Grid item>
+        <Card>
+              <CardContent>
+                <CardMedia component='img' image={img}/>
+              </CardContent>
+            </Card>
+            </Grid>
+        <Grid item style={{paddingTop: '10px'}}>
+        <Card style={{background:'lightGray'}}>
+          <CardContent>
+        <Typography style={{margin:'0'}}>{shoe.name}: ${shoe.price}</Typography>
+        <br/>
+        <Select style={{padding:'10px'}} value={this.state.size} onChange={(ev) => this.onChange(ev)} >
+          {sizes.map(size => <MenuItem key={size} value={size}>Size: {size}</MenuItem>)}
+        </Select>
         {
-            user ? <button onClick={this.addToCart}>Add To Cart</button> : ''
+            user ? <Button onClick={this.addToCart}>Add To Cart</Button> : ''
         }
-        {
-          user.admin !== null && user.admin === true  ? <Link to={`/product/${shoe.id}/update`}><button style={{color: 'red'}}>Edit Shoe</button></Link> : ''
+        <Link to='/checkout' style={{textDecoration:'none'}}><Button >Checkout</Button></Link>
+        <Link to="/" style={{textDecoration:'none'}}><Button>View All Shoes</Button></Link>
+          </CardContent>
+       </Card>
+       </Grid>
+       {
+          user.admin !== null && user.admin === true  ? <Link style={{textDecoration:'none'}} to={`/product/${shoe.id}/update`}><Button style={{textDecoration:'none', color: 'red'}}>Edit Shoe</Button></Link> : ''
         }
         {
           user.admin ?
-          <button
+          <Button
             style={{color: 'red'}}
             onClick={() => {
               deleteShoe(shoe);
               history.push('/');
             }}>Delete Shoe
-          </button>   : ''
+          </Button>   : ''
         }
-       <Link to="/">View All Shoes</Link>
+       </Grid>
       </div>
     )
   }
+}
 }
 
 export default connect(({shoes, user, orders, lineItems}) => {

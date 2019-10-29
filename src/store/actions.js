@@ -154,7 +154,6 @@ const attemptSessionLogin = ()=> {
 const logout = ()=> {
     return async(dispatch)=> {
         window.localStorage.clear('authToken')
-        history.pushState(null,'/')
       dispatch({ type: 'SET_AUTH', user: null})
     };
   };

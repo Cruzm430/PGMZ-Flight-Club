@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {actions} from '../store' 
-import AddShoe from './AddShoe'
+import Home from './Home'
 import { Link } from 'react-router-dom';
+import { Typography, Button } from '@material-ui/core';
 
 class Welcome extends React.Component{
     constructor() {
@@ -16,17 +17,17 @@ class Welcome extends React.Component{
         const { logOut } = this;
         const { user } = this.props;
         const { onClick } = this
-        let isAdmin = user.admin
+        let isAdmin
+        let _user
+    
+        if(_user){
+          _user = user
+          isAdmin = user.admin
+        }
         return (
             <div>
-                <div>Welcome {user.name}</div>
-                <Link to={`/orders`}>View Order History</Link>
-                {/* <div>{(this.props.user.admin === true) ? <AddShoe/> : ""}</div> */}
-                <Link to={'/cart'}>Cart</Link>
-                {isAdmin ? <Link to='/add'>Create</Link> : ''}
-                {isAdmin ? <Link to='/pendingOrders'>Pending Orders</Link> : ''}
-                <button onClick={logOut}>Log Out</button>
-                <Link to={'/checkout'}>Check Out</Link>
+                <Typography>Welcome {user.name}</Typography>
+                <Button onClick={logOut} href='/'>Log Out</Button>
             </div>
         )
     }
