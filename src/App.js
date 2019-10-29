@@ -24,6 +24,12 @@ class App extends Component{
     console.log("orders",this.props.orders)
   }
   render(){
+    const {getOrders, user} = this.props;
+    try {
+      if (user) getOrders(user);
+    } catch {
+      console.log('No one logged in, or still loading');
+    }
     return (
       <HashRouter>
         <Route component={Header}/>

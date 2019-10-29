@@ -12,18 +12,19 @@ class Cart extends Component {
         // this.load = this.load.bind(this)
     }
     render() {
-        const { lineItems, shoes } = this.props
-        console.log("lineItems", lineItems)
-        if (lineItems.length === null){
-            return 'No Cart';
-          }
+        const { lineItems, shoes, orders } = this.props;
+        if (!orders.length) {
+            return '...loading';
+        }
+        const cart = orders.find(order => !(order.placed));
+        console.log(lineItems);
+        const cartItems = lineItems.filter(item => item.orderId === cart.id);
         return( 
             <div>
                 { 
-                    lineItems.map(lineItem => {
-                        console.log("shoeArray", shoes)
+                    lineItems.filter(item => item.orderId === cart.id)
+                        .map(lineItem => {
                         const shoe = shoes.find(_shoe => _shoe.id === lineItem.shoeId);
-                        console.log("lineItemShoe", shoe)
                         return (<li key={lineItem.id}> 
                             <div>
                             {
@@ -40,11 +41,12 @@ class Cart extends Component {
 }
   
 
-const mapStateToProps = ({user, lineItems, shoes}, props) =>{
+const mapStateToProps = ({user, lineItems, shoes, orders}, props) =>{
     return{
         shoes,
         user,
         lineItems,
+        orders,
         props
     }
 }
