@@ -5,6 +5,7 @@ const auth = require('./middleware/auth') //USE THIS FOR ROUTES THAT REQUIRE AUT
 const path = require('path');
 const db = require('./db/index');
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const { User, Shoe, Category, Order, LineItem } = db.models;
 const Sequelize = require('sequelize');
 const { Op } = Sequelize;
@@ -91,7 +92,10 @@ app.post('/api/login', async (req,res,next) => {
     let user = await User.findOne({where: { email: req.body.email }});
     if (!user) return res.status(400).send('Invalid email or password.');
 
-    if (req.body.password !== user.password) return res.status(400).send('Invalid email or password.');
+    const validPassword = await bcrypt.compare(req.body.password, user.password)
+    if(!validPassword) return res.status(400).send('Invalid email or password.');
+    
+    // if (req.body.password !== user.password) return res.status(400).send('Invalid email or password.');
     const token = jwt.sign({id: user.id, name: user.name, admin: user.admin}, process.env.SECRET)
 
     const returnUser = {
