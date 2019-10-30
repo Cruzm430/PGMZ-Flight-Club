@@ -8,6 +8,7 @@ import AddShoe from './Components/AddShoe';
 import Search from './Components/Search';
 import CatFilter from './Components/CatFilter';
 import Shoe from './Components/Shoe';
+import Login from './Components/Login';
 import Orders from './Components/Orders';
 import UpdateShoe from './Components/UpdateShoe';
 import Cart from './Components/Cart';
@@ -38,7 +39,8 @@ class App extends Component{
           <Route exact path='/' component={Home}/> 
           <Route exact path='/add' component={AddShoe}/>
           <Route path='/cart' component={Cart}/>
-          <Route path='/orders' component={Orders} />
+          <Route path='/orders' component={Orders}/>
+          <Route path='/login' component={Login}/>
           <Route exact path='/product/:id' component={Shoe} />
           <Route path='/product/:id/update' component={UpdateShoe}/>
           <Route path='/checkout' component={Checkout} />

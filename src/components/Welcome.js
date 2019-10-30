@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import {actions} from '../store' 
 import AddShoe from './AddShoe'
 import { Link } from 'react-router-dom';
+import {Button} from '@material-ui/core'
 
 class Welcome extends React.Component{
     constructor() {
@@ -19,11 +20,7 @@ class Welcome extends React.Component{
         return (
             <div>
                 <div>Welcome {user.name}</div>
-                <Link to={`/orders`}>View Order History</Link>
-                {/* <div>{(this.props.user.admin === true) ? <AddShoe/> : ""}</div> */}
-                <Link to={'/cart'}>Cart</Link>
-                <button onClick={logOut}>Log Out</button>
-                <Link to={'/checkout'}>Check Out</Link>
+                <Link to='/' style={{textDecoration:'none'}}><Button onClick={logOut}>Log Out</Button></Link>
             </div>
         )
     }
