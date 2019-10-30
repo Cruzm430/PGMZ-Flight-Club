@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { actions } from '../store';
 import {Card, CardContent, CardMedia, Button, Select, MenuItem, Typography} from '@material-ui/core'
+import { withStyles } from '@material-ui/styles';
 
 const sizeArray = () => {
   const arr = [];
@@ -12,6 +13,23 @@ const sizeArray = () => {
   }
   return arr;
 }
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+  },
+  linkButton:{
+    textDecoration:'none',
+    color:'white'
+  },
+  container:{
+    background:'gray'
+  },
+  pic:{
+    height:'40%',
+    width:'80%'
+  }
+})
 
 class Shoe extends Component {
   constructor() {
@@ -32,7 +50,7 @@ class Shoe extends Component {
     this.setState({size: ev.target.value})
   }
   addToCart() {
-    const { createLineItem, updateLineItem, orders, lineItems, shoes, match, user} = this.props;
+    const { createLineItem, updateLineItem, orders, lineItems, shoes, match, user, classes} = this.props;
     const { size } = this.state;
     const cart = orders.find(order => !(order.placed));
     
@@ -57,7 +75,7 @@ class Shoe extends Component {
 
   render() {
     const sizes = sizeArray();
-    const { shoes, match, deleteShoe, history, user } = this.props;
+    const { shoes, match, deleteShoe, history, user, classes } = this.props;
     const shoe = shoes.find(_shoe => _shoe.id === match.params.id);
     if (!shoe){
       return '....loading';
@@ -65,12 +83,12 @@ class Shoe extends Component {
     const img = shoe.imageURL
     return (
       <div>
-        <Card>
+        <Card className={classes.container}>
           <CardContent>
-            <CardMedia component='img' image={img} style={{height:'40%', width:'80%'}}/>
+            <CardMedia component='img' image={img} className={classes.pic}/>
         <Typography>{shoe.name}: ${shoe.price}</Typography>
         <span>Size: </span>
-        <Select value={this.state.size}onChange={(ev) => { this.setState({size: ev.target.value})}}>
+        <Select value={this.state.size} onChange={(ev) => { this.setState({size: ev.target.value})}}>
           {sizes.map(size => <MenuItem key={size} value={size}>{size}</MenuItem>)}
         </Select>
         {
@@ -100,19 +118,15 @@ class Shoe extends Component {
   }
 }
 
-export default connect(({shoes, user, orders, lineItems}) => {
-  return {
-    shoes,
-    user,
-    orders,
-    lineItems
-  }
-}, (dispatch) => {
+const mapStateToProps = ({shoes, user, orders, lineItems}) => ({shoes, user, orders, lineItems})
+
+const mapDispatchToProps = (dispatch) => {
   return {
     deleteShoe: (shoe) => dispatch(actions.deleteShoe(shoe)),
     getShoes: () => dispatch(actions.getShoes()),
     createLineItem: (lineItem) => dispatch(actions.createLineItem(lineItem)),
     updateLineItem: (lineItem, update) => dispatch(actions.updateLineItem(lineItem, update)),
-    updateCart: (user) => dispatch(actions.updateCart(user))
   }
-})(Shoe);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Shoe))

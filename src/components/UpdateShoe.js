@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import {actions} from '../store' 
+import {Card, CardContent, TextField, Select, MenuItem, Typography, Button} from '@material-ui/core'
 
 class UpdateShoe extends Component{
   constructor(){
@@ -16,6 +17,9 @@ class UpdateShoe extends Component{
   }
   onChange(ev){
     let value = ev.target.value
+    if(ev.target.name === 'price'){
+      value = value *1 
+    }
     this.setState({[ev.target.name]: value})
     console.log(this.state)
   }
@@ -35,21 +39,23 @@ class UpdateShoe extends Component{
     if(shoe){
       return(
         <div>
-          <label>
-            <input placeholder={shoe.name} name='name' value={name} onChange={onChange}/>
-          </label>
-          <label>
-            <input placeholder={shoe.price} name='price' value={price} onChange={onChange}/>
-          </label>
-          <label>
-            <input placeholder={shoe.imageURL} name='imageURL' value={imageURL} onChange={onChange}/>
-          </label>
-          <select onChange={onChange} name='categoryId' value={categoryId}>
+          <Card>
+            <CardContent>
+            <TextField label='Shoe Name' name='name' placeholder={shoe.name} value={name} onChange={onChange}/>
+            <br/>
+            <TextField label='Shoe Price' name='price' placeholder={shoe.price} value={price} onChange={onChange}/>
+            <br/>
+          <TextField label='Image URL' value={imageURL} name='imageURL' placeholder={shoe.imageURL} onChange={onChange}/>
+          <br/>
+          <Typography>Category</Typography>
+          <Select onChange={(ev)=>onChange(ev)}  name='categoryId' value={categoryId}>
             {
-              categories.map(category => <option key={category.id} value={category.id}>{category.name}</option>)
+              categories.map(category => <MenuItem key={category.id} value={category.id}>{category.name}</MenuItem>)
             }
-          </select>
-          <button onClick={onSubmit}>Update Shoe</button>
+          </Select>
+          <Button onClick={onSubmit}>Update Shoe</Button>
+            </CardContent>
+          </Card>
         </div>
       )
     }

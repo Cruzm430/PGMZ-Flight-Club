@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types'
 import {Link, HashRouter, Route} from 'react-router-dom';
 import {actions} from '../store' 
-import {AppBar, Toolbar, Typography, Button, MenuItem, MenuList, FormControl, Select, IconButton, InputBase, SwipeableDrawer, FormControlLabel, Switch, Divider, Menu, TextField
+import {AppBar, Toolbar, Typography, Button, MenuItem, MenuList, FormControl, Select, TextField
 } from '@material-ui/core'
 import { DUMMY_KEY } from '../store/constants';
 import MenuIcon from '@material-ui/icons/Menu'
@@ -23,7 +23,12 @@ const styles = theme => ({
     margin:0,
     paddingRight: 4,
     paddingLeft: 4,
-    background:'gray'
+    background:'gray',
+    margin:0
+  },
+  linkButton:{
+    textDecoration:'none',
+    color:'white'
   }
 })
 
@@ -53,24 +58,17 @@ class Header extends Component{
     const {pathname} = this.props.location
 
     let isAdmin
-    let _user
     if(user){
-      _user = user
       isAdmin = user.admin
     }
 
     return(
       <div className={classes.root}>
         <HashRouter>
-          <AppBar style={{margin:0, backgroundColor:'gray'}}>
-            <Toolbar style={{justifyContent:'space-around', alignContent:'center'}}>
-              {/* <IconButton
-                edge='start'
-                color='inherit'>
-                  <MenuIcon/>
-              </IconButton> */}
+          <AppBar className={classes.testbar}>
+            <Toolbar>
             <Typography variant="h6">
-            <Link to='/' className={classes.title} style={{textDecoration:'none', color:'white'}}>PGMZ Flight Club</Link>
+            <Link to='/' className={classes.title} className={classes.linkButton}>PGMZ Flight Club</Link>
             </Typography>
               {
                 pathname === '/' ? <div>
@@ -89,10 +87,10 @@ class Header extends Component{
                 </Select>
                 </FormControl></div> : ''
               }
-              <Button><Link to={'/cart'}>Cart</Link></Button>
-              {isAdmin ? <Button><Link to='/add'>Create</Link></Button> : ''}
+              <Button><Link to={'/cart'} className={classes.linkButton}>Cart</Link></Button>
+              {isAdmin ? <Button><Link to='/add' className={classes.linkButton}>Create</Link></Button> : ''}
               {pathname !== '/login' ? 
-                user ? <Route path='/' component={Welcome}/> : <Link to='/login'><Button>Login</Button></Link>
+                user ? <Route path='/' component={Welcome}/> : <Link to='/login' className={classes.linkButton}><Button>Login</Button></Link>
                 : '' 
               }
               {/* <Button><Link to={`/orders`}>View Order History</Link></Button> */}
