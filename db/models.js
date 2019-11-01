@@ -1,5 +1,6 @@
 const conn = require('./conn');
 const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
 const {Sequelize} = conn;
 const {UUID, UUIDV4, STRING, DECIMAL, BOOLEAN, INTEGER} = Sequelize
 
@@ -27,6 +28,10 @@ const User = conn.define('user',{
   }
 })
 
+User.beforeCreate('beforeCreate', async function(user, options, fn) {
+    const salt = await bcrypt.genSalt(10)
+    user.password = await bcrypt.hash(user.password, salt)
+})
 
 User.findByToken = function(token){
     const { id } = jwt.verify(token, process.env.SECRET)
