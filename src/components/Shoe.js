@@ -22,12 +22,24 @@ const styles = theme => ({
     textDecoration:'none',
     color:'white'
   },
+  linkButton2:{
+    textDecoration:'none',
+    color:'black'
+  },
   container:{
     background:'gray'
   },
   pic:{
     height:'40%',
     width:'80%'
+  },
+  fonts:{
+    color:'white',
+    fontWeight:'bold'
+  },
+  admin:{
+    color:'red',
+    textDecoration:'none'
   }
 })
 
@@ -86,23 +98,20 @@ class Shoe extends Component {
         <Card className={classes.container}>
           <CardContent>
             <CardMedia component='img' image={img} className={classes.pic}/>
-        <Typography>{shoe.name}: ${shoe.price}</Typography>
+        <Typography className={classes.fonts}>{shoe.name}: ${shoe.price}</Typography>
         <span>Size: </span>
         <Select value={this.state.size} onChange={(ev) => { this.setState({size: ev.target.value})}}>
           {sizes.map(size => <MenuItem key={size} value={size}>{size}</MenuItem>)}
         </Select>
         {
-            user ? <Button onClick={this.addToCart}>Add To Cart</Button> : ''
+            user ? <Link to='/cart' className={classes.linkButton}><Button onClick={this.addToCart} >Add To Cart</Button></Link> : ''
         }
-        <Link to='/checkout' style={{textDecoration:'none'}}><Button>
-          Go to Checkout
-        </Button></Link>
         </CardContent>
        </Card>
        {
           user && user.admin  ?
           <Button
-            style={{color: 'red'}}
+            className={classes.admin}
             onClick={() => {
               deleteShoe(shoe);
               history.push('/');
@@ -110,9 +119,9 @@ class Shoe extends Component {
           </Button>   : ''
         }
        {
-          user && user.admin !== null && user.admin === true  ? <Link to={`/product/${shoe.id}/update`} style={{textDecoration:'none'}}><Button style={{color: 'red'}}>Edit Shoe</Button></Link> : ''
+          user && user.admin !== null && user.admin === true  ? <Link to={`/product/${shoe.id}/update`} style={{textDecoration:'none'}}><Button className={classes.admin}>Edit Shoe</Button></Link> : ''
         }
-        <Button><Link to="/" style={{textDecoration:'none', color:'black'}}>View All Shoes</Link></Button>
+        <Button><Link to="/" className={classes.linkButton2}>View All Shoes</Link></Button>
       </div>
     )
   }

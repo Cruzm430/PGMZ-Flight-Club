@@ -15,6 +15,7 @@ import Welcome from './Welcome'
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    paddingBottom:'100px'
   },
   title:{
     flexGrow:1,
@@ -89,11 +90,11 @@ class Header extends Component{
               }
               <Button><Link to={'/cart'} className={classes.linkButton}>Cart</Link></Button>
               {isAdmin ? <Button><Link to='/add' className={classes.linkButton}>Create</Link></Button> : ''}
+              {user ? <Button><Link to={`/orders`} className={classes.linkButton}>Order History</Link></Button> : ''}
               {pathname !== '/login' ? 
-                user ? <Route path='/' component={Welcome}/> : <Link to='/login' className={classes.linkButton}><Button>Login</Button></Link>
+                user ? <Route path='/' component={Welcome} className={classes.linkButton} /> : <Link to='/login' className={classes.linkButton}><Button>Login</Button></Link>
                 : '' 
               }
-              {/* <Button><Link to={`/orders`}>View Order History</Link></Button> */}
               {/* {isAdmin ? <Button><Link to='/pendingOrders'>Pending Orders</Link></Button> : ''} */}
               {/* <Button><Link to={'/checkout'}>Check Out</Link></Button> */}
   </Toolbar>

@@ -34,8 +34,8 @@ class App extends Component{
     return (
       <HashRouter>
         <Route component={Header}/>
-        <Route component={CatFilter}/>
-        <Route component={Search}/>
+        {/* <Route component={CatFilter}/>
+        <Route component={Search}/> */}
         <Switch>
           <Route exact path='/' component={Home}/> 
           <Route exact path='/add' component={AddShoe}/>
@@ -69,6 +69,7 @@ const mapDispatchToProps = (dispatch) => {
     getShoes: () => dispatch(actions.getShoes()),
     getCategories: () => dispatch(actions.getCategories()),
     getLineItems: () => dispatch(actions.getLineItems()),
+    getOrders: (user) => dispatch(actions.getOrders(user)),
     attemptSessionLogin: () => dispatch(actions.attemptSessionLogin())
   }
 }

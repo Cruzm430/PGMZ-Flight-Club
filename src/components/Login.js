@@ -48,12 +48,13 @@ class Login extends React.Component{
                 name="password" />
                 <br/>
                 </FormControl>
-                
+                <br/>
                 <Button 
                 style={{marginTop: '1.5'}}
                 onClick={onSubmit}
                 value="Login" 
                 variant='contained'><Link to='/' style={{textDecoration:'none', color:'black'}}>Log In</Link></Button>
+                <Button variant='contained'>Create Account</Button>
                 </CardContent>
             </Card> 
           </div>    
