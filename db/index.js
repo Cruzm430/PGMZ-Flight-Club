@@ -1,11 +1,15 @@
 const conn = require('./conn');
+const bcrypt = require('bcrypt')
 
 const {User, Shoe, Category, LineItem, Order} = require('./models')
 
 Shoe.belongsTo(Category)
 
+
 const syncAndSeed = async() =>{
   await conn.sync({force:true});
+
+  
 
   const users = [
     {name:'Mark', email:'mark@gmail.com', password:'MARK'},
