@@ -1,6 +1,6 @@
 import {SET_USERS, SET_SHOES, SET_CATEGORIES, SET_ORDERS, CREATE_SHOE, DUMMY_KEY, SET_AUTH,
   DELETE_SHOE, UPDATE_SHOE, CREATE_LINE_ITEM, UPDATE_LINE_ITEM, SET_LINE_ITEMS, SET_CART,
-  CREATE_ORDER, UPDATE_ORDER} from './constants';
+  CREATE_ORDER, UPDATE_ORDER, DELETE_LINE_ITEM} from './constants';
 import axios from 'axios';
 
 const setUsers = (users) => {
@@ -74,6 +74,13 @@ const _updateLineItem = (lineItem) => {
   return {
     lineItem,
     type: UPDATE_LINE_ITEM
+  }
+}
+
+const _deleteLineItem = (lineItem) => {
+  return {
+    lineItem,
+    type:DELETE_LINE_ITEM
   }
 }
 
@@ -202,6 +209,13 @@ const updateLineItem = (lineItem, update) => {
   }
 }
 
+const deleteLineItem = (lineItem) => {
+  return async (dispatch) =>{
+    await axios.delete(`/api/lineitems/${lineItem.id}`)
+    return dispatch(_deleteLineItem(lineItem))
+  }
+}
+
 const getOrders = (user) => {
   return async (dispatch) => {
     const orders = (await axios.get(`/api/orders/${user.id}`)).data
@@ -239,6 +253,7 @@ export {
   getLineItems,
   createLineItem,
   updateLineItem,
+  deleteLineItem,
   getOrders,
   createOrder,
   updateOrder

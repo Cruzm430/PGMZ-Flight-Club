@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import {actions} from '../store' 
 import axios from 'axios'
 
 class Orders extends Component {
