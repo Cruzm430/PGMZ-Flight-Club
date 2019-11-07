@@ -12,11 +12,13 @@ const { User, Shoe, Category, Order, LineItem } = db.models;
 const Sequelize = require('sequelize');
 const { Op } = Sequelize;
 const bodyParser = require('body-parser')
+const uuid = require('uuid/v4')
 
 module.exports = app;
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(cors())
  
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
@@ -207,17 +209,17 @@ app.post('/checkout', async (req,res)=>{
   let error;
   let status;
   try{
-    const {product, token} = req.body
-    const customer = await stripe.customers.create({
-      email:token.email,
-      source: token.id
-    })
+    const {token} = req.body
+    // const customer = await stripe.customers.create({
+    //   email:token.email,
+    //   source: token.id
+    // })
     const idempotency_key = uuid();
     const charge = await stripe.charges.create({
-      currency: 'usd',
-      customer: customer.id,
-      receipt_email : token.email,
-      description: 'Purchased',
+      amount: 100,
+      currency: 'USD',
+      // customer: customer.id,
+      description: `Purchased`,
       shipping:{
         name: token.card.name,
         address:{
@@ -234,9 +236,11 @@ app.post('/checkout', async (req,res)=>{
     }
     );
     console.log('Charge', charge)
+    status = 'success'
   }
   catch(error){
     console.error('Error:', error)
+    status = 'failure'
   }
   res.json({error,status})
 })

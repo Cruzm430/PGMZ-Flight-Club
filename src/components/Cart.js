@@ -5,6 +5,9 @@ import {actions} from '../store'
 import {Link} from 'react-router-dom'
 import {TextField, Card, CardContent, Button, Typography, CardMedia} from '@material-ui/core'
 import { withStyles } from '@material-ui/styles';
+import StripeCheckout from 'react-stripe-checkout';
+import axios from 'axios'
+import { typography } from '@material-ui/system';
 
 const styles = theme => ({
     card:{
@@ -34,10 +37,12 @@ class Cart extends Component {
     constructor () {
         super()
         this.state={
-            edit:false
+            edit:false,
+            purchase:false,
         }
         this.onClick = this.onClick.bind(this)
         this.onUpdate = this.onUpdate.bind(this)
+        this.onClose = this.onClose.bind(this)
     }
     onClick(){
         this.setState({edit:!this.state.edit})
@@ -46,12 +51,27 @@ class Cart extends Component {
         const update = ev*1
         this.props.updateLineItem(line, {quantity:update})
     }
+    onClose(){
+        const {cart, updateOrder, createOrder, user} = this.props 
+        updateOrder(cart, {placed: true});
+        createOrder({userId: user.id});
+    }
+     handleToken(token, addresses){
+        fetch('/checkout',{
+            method:'POST',
+            body:JSON.stringify(token),
+        }).then(res =>{
+            res.json().then(data => {
+                alert('Bought! Ready for the next round?')
+            })
+        })
+    }
     render() {
-        const { lineItems, shoes, orders, user, classes } = this.props;
+        const { lineItems, shoes, orders, user, classes, cart } = this.props;
+        console.log(this.props)
         if (!orders.length || !user) {
             return <Typography>Please sign in</Typography>;
         }
-        const cart = orders.find(order => !(order.placed));
         let total = 0
         if(!user){
             return(
@@ -110,27 +130,35 @@ class Cart extends Component {
                     this.state.edit ? <Typography>Save Order</Typography> : <Typography>Edit Order</Typography>
                     }
                 </Button>
-                <Link to='/checkout' style={{textDecoration:'none'}}><Button>
-                    Check Out
-                  </Button></Link>
+                <StripeCheckout
+                stripeKey='pk_test_Go6vFW40jdP1LXm3yHP8Adrd0038lBYP6L'
+                token={this.handleToken}
+                amount = {total * 100}
+                billingAddress
+                shippingAddress
+                closed={this.onClose}/>
                 </Card>
             </div>
         )
     }
 }
 const mapStateToProps = ({user, lineItems, shoes, orders}, props) =>{
+    const cart = orders.find(order => !(order.placed))
     return{
         shoes,
         user,
         lineItems,
         orders,
+        cart,
         props
     }
 }
 const mapDispatchToProps = (dispatch) =>{
     return{
         deleteLineItem: (lineItem) => dispatch(actions.deleteLineItem(lineItem)),
-        updateLineItem: (lineItem, update) => dispatch(actions.updateLineItem(lineItem,update)) 
+        updateLineItem: (lineItem, update) => dispatch(actions.updateLineItem(lineItem,update)),
+        updateOrder: (order, update) => dispatch(actions.updateOrder(order, update)),
+        createOrder: (order) => dispatch(actions.createOrder(order)),
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Cart))

@@ -44,7 +44,7 @@ class App extends Component{
           <Route path='/login' component={Login}/>
           <Route exact path='/product/:id' component={Shoe} />
           <Route path='/product/:id/update' component={UpdateShoe}/>
-          <Route path='/checkout' component={Checkout} />
+          {/* <Route path='/checkout' component={Checkout} /> */}
         </Switch>
       </HashRouter>
     )

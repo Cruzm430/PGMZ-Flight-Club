@@ -24,7 +24,6 @@ class Orders extends Component {
                {
                    orderInvoices.map((order,idx)=>{
                        let date = prevOrderDates[idx]
-
                        return (
                         <Card key={idx}> 
                             <CardContent>
@@ -51,7 +50,6 @@ class Orders extends Component {
                             </Card>)
                             })
                        }
-                        <Typography>Total: ${total}</Typography>
                        </CardContent>
                        </Card>
                        )
