@@ -215,6 +215,7 @@ app.post('/checkout', async (req,res)=>{
     //   source: token.id
     // })
     const idempotency_key = uuid();
+    console.log(token)
     const charge = await stripe.charges.create({
       amount: 100,
       currency: 'USD',

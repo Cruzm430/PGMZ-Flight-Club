@@ -52,23 +52,19 @@ class Cart extends Component {
         this.props.updateLineItem(line, {quantity:update})
     }
     onClose(){
-        const {cart, updateOrder, createOrder, user} = this.props 
+        const {cart, updateOrder, createOrder,history, user} = this.props 
         updateOrder(cart, {placed: true});
         createOrder({userId: user.id});
+        history.push('/')
     }
      handleToken(token, addresses){
         fetch('/checkout',{
             method:'POST',
             body:JSON.stringify(token),
-        }).then(res =>{
-            res.json().then(data => {
-                alert('Bought! Ready for the next round?')
-            })
         })
     }
     render() {
         const { lineItems, shoes, orders, user, classes, cart } = this.props;
-        console.log(this.props)
         if (!orders.length || !user) {
             return <Typography>Please sign in</Typography>;
         }
