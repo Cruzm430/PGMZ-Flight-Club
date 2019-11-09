@@ -2,17 +2,17 @@ import React, {Component} from 'react'
 import {HashRouter, Switch, Route, Redirect} from 'react-router-dom';
 import {actions} from './store';
 import {connect} from 'react-redux';
-import Home from './Components/Home';
-import Header from './Components/Header';
-import AddShoe from './Components/AddShoe';
-import Search from './Components/Search';
-import CatFilter from './Components/CatFilter';
-import Shoe from './Components/Shoe';
-import Login from './Components/Login';
-import Orders from './Components/Orders';
-import UpdateShoe from './Components/UpdateShoe';
-import Cart from './Components/Cart';
-import Checkout from './Components/Checkout';
+import Home from './components/Home';
+import Header from './components/Header';
+import AddShoe from './components/AddShoe';
+import Search from './components/Search';
+import CatFilter from './components/CatFilter';
+import Shoe from './components/Shoe';
+import Login from './components/Login';
+import Orders from './components/Orders';
+import UpdateShoe from './components/UpdateShoe';
+import Cart from './components/Cart';
+import Checkout from './components/Checkout';
 //can we refactor these?
 
 class App extends Component{
