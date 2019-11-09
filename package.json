@@ -7,7 +7,8 @@
     "test:dev": "mocha spec.js --watch",
     "webpack": "webpack --watch --mode=development",
     "start:dev": "SECRET=FOO nodemon server.js --ignore dist/ --ignore src/ & npm run webpack",
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "npm run webpack"
   },
   "babel": {
     "presets": [
