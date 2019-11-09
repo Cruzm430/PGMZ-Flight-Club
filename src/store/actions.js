@@ -248,6 +248,7 @@ export {
   attemptLogin,
   searchByName,
   searchByCat,
+  createShoe,
   deleteShoe,
   updateShoe,
   getLineItems,
